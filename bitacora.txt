@@ -639,3 +639,92 @@ y resueltos sin !important:
 
 Probado index.html a 360px, 768px y 1280px tras publicar (ver
 verificación visual más abajo). Commit y push.
+
+4. RUEDA LIBRE v2.0-beta: MIGRACIÓN COMPLETA (MINIRETO 8)
+--------------------------------------------------
+Se agregó Bootstrap 5.3.3 por CDN a tarifas.html y reservas.html (mismo
+patrón que index.html: hoja propia cargada después).
+
+Tarifas: las dos tablas (alquiler y recorridos) y el <aside> de
+información importante se envolvieron en container + row + col-12
+col-lg-8 (tablas) / col-12 col-lg-4 (aside), en dos columnas desde lg
+como pide el reto. Las tablas conservan exactamente los estilos de
+tabla de la semana 1 (table, caption, th, td, thead th en
+css/styles.css) — no se les puso la clase .table de Bootstrap, para no
+pisar ese diseño propio.
+
+Reservas: el formulario y el <aside> de horario se envolvieron en
+container + row + col-12 col-md-8 / col-12 col-md-4 (reemplazando a
+.reservas-layout). La fila de "Número de documento" y "Celular /
+WhatsApp" pasó de .fila-formulario (Flexbox propio) a row g-3 + dos
+col-12 col-sm-6. Se revisó campo por campo que TODOS los atributos de
+validación nativa (required, pattern, minlength, type, min, max,
+maxlength, title) quedaran idénticos a como estaban — ninguno se tocó,
+solo se les cambió el contenedor.
+
+Limpieza de css/styles.css: se eliminaron .reservas-layout y
+.fila-formulario (y su entrada en la media query de 768px), ya
+resueltas por la grilla de Bootstrap. Se dejó solo identidad visual:
+variables de marca, tipografía, colores, el look de las tarjetas
+(.servicios, que index.html todavía no migra), tablas, formularios
+(fieldset/legend/label/input) y estados de foco/hover. El nav/menú y
+los botones (.cta, button[type=submit]) tampoco se tocaron: eso se
+unifica en el MiniReto 9 (Día 3), cuando el menú pase a navbar.
+
+CONFLICTO EXTRA encontrado al revisar las tres páginas ya con
+Bootstrap (no estaba en los 3 del MiniReto 7, pero vale la pena
+dejarlo documentado): <main> tenía un max-width:60rem (960px) fijo de
+la v1.5, pensado para cuando el ancho lo controlaba a mano esa misma
+regla. Con las tres páginas migradas, cada <main> ahora envuelve un
+.container de Bootstrap, que ya trae su propio max-width por punto de
+quiebre (540/720/960/1140/1320px) y su propio padding lateral. Como
+.container queda anidado DENTRO de <main>, el límite fijo de 960px lo
+seguía recortando en pantallas grandes (xl/xxl) sin aportar nada —
+confirmado con getBoundingClientRect(): el contenido quedaba en 928px
+de ancho útil en vez de los ~1100px que Bootstrap habría dado en
+escritorio. Se resolvió eliminando la regla main{max-width...} de
+css/styles.css (sin !important, simplemente porque ya era redundante
+con .container).
+
+Comparativa final (líneas de css/styles.css, medidas en el historial de
+commits de GitHub):
+- v1.5 (commit 5f4b928, antes de tocar Bootstrap): 484 líneas.
+- Actual (tras los MiniRetos 7 y 8): 434 líneas, es decir, un 10% menos,
+  a pesar de que "Nuestros servicios" (index.html), el nav/menú y los
+  botones TODAVÍA no se migran (quedan para el MiniReto 9). La baja
+  viene de haber borrado por completo .portada, .portada-texto,
+  .galeria-rutas, .flota y sus reglas de tarjeta compartidas,
+  .reservas-layout y .fila-formulario: toda esa distribución ahora
+  sale de clases en el HTML (row, col-*, card, d-flex, gap-*, etc.),
+  no de CSS propio.
+- Tiempo invertido: como en el MiniReto 5, esta cifra no es una
+  métrica honesta aquí porque la implementación la hizo Claude
+  directamente, no un desarrollador cronometrado; se mantiene el
+  mismo criterio de comparar código en vez de tiempo.
+
+Ventajas observadas: menos CSS propio que mantener y revisar;
+tarjetas, grilla y utilidades responsive llegan listas y ya probadas
+en miles de sitios; los puntos de quiebre quedan declarados en el
+HTML, visibles de un vistazo sin saltar al CSS. Desventajas
+observadas: el HTML queda con bastantes más clases por elemento (más
+verboso de leer y editar a mano); el verde de marca exacto no sale
+"gratis" — hubo que redeclarar --bs-success para que btn-success y
+compañía no usaran el verde por defecto de Bootstrap; y mezclar un
+framework con CSS propio obliga a vigilar la cascada (los 4
+conflictos documentados en este archivo).
+
+Conclusión: para una migración incremental como esta —con solo tres
+páginas y sin un diseño ya 100% a medida— Bootstrap sí redujo el CSS
+propio que hay que mantener y aceleró la distribución responsive, sin
+sacrificar la identidad de marca (colores, tipografías, tarjetas,
+tablas) gracias a dejar que css/styles.css se cargue después y gane la
+cascada. El costo real no fue de "tiempo", sino de tener que entender
+bien el orden de carga y las variables de Bootstrap para no perder esa
+identidad por el camino.
+
+Probado tarifas.html y reservas.html a 360px, 768px y 1280px tras
+publicar. Commit y push.
+
+ENLACE PÚBLICO DE LA VERSIÓN v2.0-beta (GITHUB PAGES)
+--------------------------------------------------
+https://dnloropo.github.io/rueda-libre/
