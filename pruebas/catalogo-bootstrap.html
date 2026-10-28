@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Catálogo de la flota (pruebas Bootstrap) | Rueda Libre</title>
+  <title>Catálogo y beneficios (pruebas Bootstrap) | Rueda Libre</title>
   <!-- Bootstrap 5.3 por CDN. Página de pruebas: a propósito NO se enlaza
        css/styles.css aquí, para que toda la distribución salga solo de
        las clases de la grilla de Bootstrap (MiniReto 5). -->
@@ -102,6 +102,53 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- MiniReto 6: sección de beneficios, construida solo con utilidades
+       (espaciado, tipografía, colores, display y flex) -->
+  <div class="container py-5">
+    <h2 class="text-center mb-5">¿Por qué Rueda Libre?</h2>
+
+    <div class="row g-4 text-center">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <p class="fs-1 text-success mb-2">🔧</p>
+        <h3 class="h5 fw-bold mb-1">Bicicletas revisadas</h3>
+        <p class="text-secondary mb-1">Revisión mecánica completa en cada alquiler.</p>
+        <p class="fw-bold text-success small">100% de las bicis, cada vez</p>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <p class="fs-1 text-success mb-2">🪖</p>
+        <h3 class="h5 fw-bold mb-1">Casco y candado incluidos</h3>
+        <p class="text-secondary mb-1">Sin costos adicionales, en cada alquiler.</p>
+        <p class="fw-bold text-success small">Incluido siempre</p>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <p class="fs-1 text-success mb-2">🧭</p>
+        <h3 class="h5 fw-bold mb-1">Guías certificados</h3>
+        <p class="text-secondary mb-1">Expertos locales en cada recorrido guiado.</p>
+        <p class="fw-bold text-success small">100% certificados</p>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <p class="fs-1 text-success mb-2">📍</p>
+        <h3 class="h5 fw-bold mb-1">Puntos de devolución</h3>
+        <p class="text-secondary mb-1">Devuelve tu bicicleta donde te quede mejor.</p>
+        <p class="fw-bold text-success small">3 sedes en la ciudad</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Franja final: columna en móvil, fila desde md (d-flex + flex-md-row) -->
+  <div class="text-bg-success py-5">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
+      <div class="d-flex align-items-center gap-3">
+        <img src="../img/ruta.jpeg" alt="" class="d-none d-md-block rounded-circle w-25">
+        <p class="fs-3 fw-bold mb-0">¿Listo para rodar?</p>
+      </div>
+      <a href="../paginas/reservas.html" class="fs-5 fw-bold text-success bg-white px-4 py-2 rounded-pill text-decoration-none">Reservar ahora</a>
     </div>
   </div>
 
