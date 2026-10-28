@@ -22,7 +22,7 @@ Prueba de ruta inexistente:
 - HTML (Lenguaje de marcado): Define la estructura y el contenido semántico del sitio web (encabezados, párrafos, tablas, imágenes, listas y enlaces).
   Ejemplo: <h1>Rueda Libre</h1>
 - CSS (Hojas de estilo en cascada): Controla la presentación visual, colores, tipografía, diseño adaptativo y disposición de los elementos.
-  Ejemplo: header { background-color: green; color: white; }
+  Ejemplo: header { background-color: # green; color: white; }
 - JavaScript (Lenguaje de programación): Aporta interactividad dinámica y lógica en el lado del cliente (validación de formularios, filtros interactivos).
   Ejemplo: Evento para calcular automáticamente la tarifa total según las horas seleccionadas.
 
@@ -133,8 +133,8 @@ AUDITORÍA DE ACCESIBILIDAD Y PALETA DE MARCA (MINIRETO 8)
 
 2. EVALUACIÓN DE CONTRASTE WCAG (PALETA DE MARCA)
 --------------------------------------------------
-- Verde Ruta (#1E7A4F) sobre blanco (#FFFFFF): ~4.8:1 -> Apta para texto normal (WCAG AA).
-- Naranja Pedal (#F39A2B) sobre blanco (#FFFFFF): ~2.3:1 -> No apta para texto normal (Solo texto grande / elementos gráficos).
+- Blanco (#FFFFFF) sobre Verde Ruta (#1E7A4F): ~4.8:1 -> Apta para texto normal (WCAG AA).
+- Blanco (#FFFFFF) sobre Naranja Pedal (#F39A2B): ~2.3:1 -> No apta para texto normal (Solo texto grande / elementos gráficos).
 - Azul Noche (#14213D) sobre Naranja Pedal (#F39A2B): ~3.1:1 -> Apta solo para texto grande.
 - Azul Noche (#14213D) sobre Crema (#FAF6EF): ~12.5:1 -> Apta para texto normal (Excelente contraste).
 - Gris Asfalto (#5B6470) sobre Crema (#FAF6EF): ~5.2:1 -> Apta para texto normal (WCAG AA).
