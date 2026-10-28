@@ -114,3 +114,124 @@ textarea:focus {
     background-color: var(--azul-noche);
     color: var(--blanco);
 }
+
+/* -----------------------------------------------------
+   4. MODELO DE CAJA Y LAYOUT
+----------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+main {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 0 var(--espacio-md);
+}
+
+/* Portada de inicio: alto mínimo relativo a la ventana */
+.portada {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Tarjetas de servicios */
+.servicios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-lg);
+}
+
+.servicios article {
+    flex: 1 1 16rem;
+    background-color: var(--blanco);
+    border: 1px solid var(--gris-asfalto);
+    border-radius: 0.5rem;
+    padding: var(--espacio-md);
+}
+
+.servicios article img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.25rem;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--espacio-lg);
+}
+
+caption {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: var(--espacio-sm);
+}
+
+th,
+td {
+    padding: var(--espacio-sm) var(--espacio-md);
+    border: 1px solid var(--gris-asfalto);
+    text-align: left;
+}
+
+thead th {
+    background-color: var(--azul-noche);
+    color: var(--blanco);
+}
+
+/* Formulario */
+fieldset {
+    border: 1px solid var(--gris-asfalto);
+    border-radius: 0.5rem;
+    padding: var(--espacio-md);
+    margin-bottom: var(--espacio-lg);
+}
+
+legend {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    padding: 0 var(--espacio-sm);
+}
+
+label {
+    display: block;
+    margin-bottom: var(--espacio-sm);
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: var(--espacio-sm);
+    margin-bottom: var(--espacio-md);
+    border: 1px solid var(--gris-asfalto);
+    border-radius: 0.25rem;
+    font-family: var(--fuente-texto);
+}
+
+button[type="submit"] {
+    background-color: var(--verde-ruta);
+    color: var(--blanco);
+    border: none;
+    padding: var(--espacio-md) var(--espacio-lg);
+    border-radius: 0.25rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+    background-color: var(--azul-noche);
+}
