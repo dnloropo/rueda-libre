@@ -414,3 +414,50 @@ El menú, la cuadrícula de la flota y la validación nativa del formulario
 se revisaron después de estos cambios y siguen funcionando igual que
 antes: ninguno de los selectores nuevos entra en conflicto con los ya
 existentes.
+
+4. RUEDA LIBRE v1.5: ENFOQUE MOBILE-FIRST (MINIRETO 4)
+--------------------------------------------------
+Se reorganizó styles.css para que los estilos base (fuera de cualquier
+media query) describan la versión móvil en una sola columna, y se
+agregaron dos puntos de quiebre con min-width: 768px (tablet) y 1200px
+(escritorio), aplicados solo donde el contenido lo necesitaba:
+encabezado/pie, portada, galería de rutas, reservas y tablas.
+
+Problemas responsive encontrados y cómo se resolvieron (probados con el
+modo dispositivo a 360px, 768px y 1280px):
+1. Problema: en 360px, el encabezado con nombre y menú en la misma fila
+   (como en el MiniReto 1) deja muy poco espacio para los tres enlaces
+   del menú, que terminan apretados o truncados.
+   Solución: mobile-first, el header empieza en columna (nombre arriba,
+   menú debajo, centrado) y solo pasa a fila con justify-content:
+   space-between desde 768px.
+2. Problema: la cuadrícula de la flota, el layout 2:1 de reservas y la
+   portada a dos columnas (pensados para escritorio) dejan columnas de
+   menos de 150px de ancho en un celular de 360px, con el texto e
+   imágenes aplastados.
+   Solución: todos esos contenedores inician en una sola columna
+   (grid-template-columns: 1fr o flex-direction: column) y solo adoptan
+   su distribución de columnas desde 768px o 1200px según el caso.
+3. Problema: las imágenes con atributos width fijos (logo, bicicleta,
+   ruta) se salían de su contenedor o forzaban scroll horizontal en
+   pantallas angostas.
+   Solución: regla global img { max-width: 100%; height: auto; } y
+   eliminación de los atributos width="..." del HTML; el logo usa ahora
+   una clase .logo con max-width: 10rem en vez de un ancho fijo.
+4. Problema: las tablas de tarifas.html, con el mismo relleno y tamaño
+   de letra que en escritorio, obligaban a desplazarse de lado en un
+   celular de 360px.
+   Solución: th/td inician con relleno y letra reducidos (0.4rem 0.5rem,
+   0.85rem) en móvil y crecen por etapas en los dos puntos de quiebre
+   (0.5rem 0.75rem/0.95rem en tablet, y el relleno y tamaño originales
+   en escritorio desde 1200px).
+
+La v1.5 fue probada en el modo dispositivo de DevTools a 360px (una sola
+columna, sin scroll horizontal en ninguna sección ni tabla), 768px
+(encabezado en fila, portada a dos columnas, galería de rutas en fila,
+reservas en proporción 2:1) y 1280px (mismo layout de tablet, con más
+separación entre tarjetas y tablas a tamaño completo).
+
+ENLACE PÚBLICO DE LA VERSIÓN v1.5 (GITHUB PAGES)
+--------------------------------------------------
+https://dnloropo.github.io/rueda-libre/
