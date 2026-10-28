@@ -153,4 +153,4 @@ AUDITORÍA DE ACCESIBILIDAD Y PALETA DE MARCA (MINIRETO 8)
 
 4. ENLACE PÚBLICO DEL SITIO (GITHUB PAGES)
 --------------------------------------------------
-URL del sitio publicado: https://dnloropo.github.io/minireto19oct/
+URL del sitio publicado: https://dnloropo.github.io/rueda-libre/
