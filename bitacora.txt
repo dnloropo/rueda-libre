@@ -169,3 +169,25 @@ BITÁCORA DE PRUEBAS Y DECISIONES - RUEDA LIBRE v1.0 (DÍA 3: CSS)
 Comprobación de herencia (DevTools: Styles / Computed) en un <p> dentro de <main>:
 - Propiedad que SÍ se hereda: "color". El párrafo no tiene una regla propia de color; en el panel Computed aparece el mismo valor que <body> (var(--azul-noche) = #14213D), heredado por la cascada de herencia normal de las propiedades de texto.
 - Propiedad que NO se hereda: "background-color". Aunque <body> define background-color: var(--crema), el <p> aparece en Computed con background-color: rgba(0, 0, 0, 0) (transparente): esta propiedad no es heredable por especificación CSS, por lo que el párrafo deja ver el fondo de su contenedor en vez de copiar el valor del body.
+
+2. CONFLICTO DE ESPECIFICIDAD EN EL MENÚ (MINIRETO 10)
+--------------------------------------------------
+Reglas en conflicto:
+  #menu a { color: var(--gris-asfalto); }
+  .activo { color: var(--verde-ruta); font-weight: 600; }
+
+Cálculo de especificidad (id, clase, elemento):
+  - #menu a   -> 1 id + 0 clases + 1 elemento = (1,0,1)
+  - .activo   -> 0 id + 1 clase  + 0 elementos = (0,1,0)
+
+Causa del problema: un selector de id siempre pesa más que cualquier cantidad
+de clases, sin importar el orden en que aparezcan las reglas en el archivo.
+Por eso, aunque .activo se escriba después en la hoja de estilos, #menu a
+(1,0,1) le gana a .activo (0,1,0) y el enlace de la página activa se queda
+en gris (--gris-asfalto) en vez de verde (--verde-ruta).
+
+Corrección (sin !important ni estilos en línea): se agregó la regla
+"#menu a.activo { color: var(--verde-ruta); border-bottom: 2px solid var(--verde-ruta); }",
+con especificidad (1,1,1). Al combinar el id, la clase y el elemento en un
+solo selector, su especificidad supera a la de "#menu a" (1,0,1) y el enlace
+activo vuelve a mostrarse en verde con un subrayado adicional.
