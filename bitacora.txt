@@ -154,3 +154,18 @@ AUDITORÍA DE ACCESIBILIDAD Y PALETA DE MARCA (MINIRETO 8)
 4. ENLACE PÚBLICO DEL SITIO (GITHUB PAGES)
 --------------------------------------------------
 URL del sitio publicado: https://dnloropo.github.io/rueda-libre/
+
+==================================================
+BITÁCORA DE PRUEBAS Y DECISIONES - RUEDA LIBRE v1.0 (DÍA 3: CSS)
+==================================================
+
+1. HOJA DE ESTILOS EXTERNA Y HERENCIA (MINIRETO 9)
+--------------------------------------------------
+- Se creó css/styles.css y se enlazó en las tres páginas (index.html con "css/styles.css"; paginas/tarifas.html y paginas/reservas.html con "../css/styles.css").
+- Se cargaron Montserrat (700) y Open Sans (400, 600) desde Google Fonts con preconnect, antes del enlace a styles.css.
+- Variables declaradas en :root: 5 colores de marca, --fuente-titulos, --fuente-texto (ambas con fuente de respaldo) y una escala de espaciado de 4 tamaños en rem (--espacio-sm/md/lg/xl).
+- font-family, color y background-color se aplicaron una sola vez en <body>; el resto de elementos de texto (p, li, etc.) los heredan sin volver a declararlos.
+
+Comprobación de herencia (DevTools: Styles / Computed) en un <p> dentro de <main>:
+- Propiedad que SÍ se hereda: "color". El párrafo no tiene una regla propia de color; en el panel Computed aparece el mismo valor que <body> (var(--azul-noche) = #14213D), heredado por la cascada de herencia normal de las propiedades de texto.
+- Propiedad que NO se hereda: "background-color". Aunque <body> define background-color: var(--crema), el <p> aparece en Computed con background-color: rgba(0, 0, 0, 0) (transparente): esta propiedad no es heredable por especificación CSS, por lo que el párrafo deja ver el fondo de su contenedor en vez de copiar el valor del body.
