@@ -22,7 +22,7 @@ Prueba de ruta inexistente:
 - HTML (Lenguaje de marcado): Define la estructura y el contenido semántico del sitio web (encabezados, párrafos, tablas, imágenes, listas y enlaces).
   Ejemplo: <h1>Rueda Libre</h1>
 - CSS (Hojas de estilo en cascada): Controla la presentación visual, colores, tipografía, diseño adaptativo y disposición de los elementos.
-  Ejemplo: header { background-color: # green; color: white; }
+  Ejemplo: header { background-color: green; color: white; }
 - JavaScript (Lenguaje de programación): Aporta interactividad dinámica y lógica en el lado del cliente (validación de formularios, filtros interactivos).
   Ejemplo: Evento para calcular automáticamente la tarifa total según las horas seleccionadas.
 
