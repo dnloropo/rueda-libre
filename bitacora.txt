@@ -458,6 +458,25 @@ columna, sin scroll horizontal en ninguna sección ni tabla), 768px
 reservas en proporción 2:1) y 1280px (mismo layout de tablet, con más
 separación entre tarjetas y tablas a tamaño completo).
 
+5. CORRECCIÓN POSTERIOR: TÍTULOS DENTRO DEL CONTENEDOR FLEX/GRID
+--------------------------------------------------
+Al verificar visualmente la v1.5 publicada, se encontró un bug real en
+"Nuestros servicios" y "Nuestra flota": el <h2> de cada sección estaba
+como hijo directo de .servicios/.flota, el mismo contenedor con
+display: flex o display: grid de las tarjetas. Eso hacía que el
+navegador tratara el título como un elemento más de la fila/cuadrícula
+(se acomodaba al lado de la primera tarjeta en vez de quedar arriba).
+
+La sección "Nuestras rutas" (MiniReto 3) sí se había construido bien desde
+el principio, con el <h2> fuera de .galeria-rutas; se usó ese mismo patrón
+para corregir los otros dos casos: el <h2> queda ahora como hijo directo
+de <section>, y las tarjetas se movieron a un <div> con la clase
+.servicios o .flota (sin tocar la hoja de estilos, porque esas clases
+nunca dejaron de ser las de los contenedores flex/grid). Se verificó de
+nuevo en el sitio publicado que los tres títulos ("Nuestras rutas",
+"Nuestros servicios", "Nuestra flota") quedan por encima de sus tarjetas
+en todas las anchuras.
+
 ENLACE PÚBLICO DE LA VERSIÓN v1.5 (GITHUB PAGES)
 --------------------------------------------------
 https://dnloropo.github.io/rueda-libre/
