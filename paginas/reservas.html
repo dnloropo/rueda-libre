@@ -30,6 +30,7 @@
     <main>
         <h1>Reserva tu bicicleta</h1>
 
+        <div class="reservas-layout">
         <!-- Sección: Formulario de Reserva -->
         <section>
             <h2>Formulario de reserva</h2>
@@ -46,19 +47,21 @@
                     </p>
 
                     <p>
-                        <label for="documento">Número de documento:*</label><br>
-                        <input type="text" id="documento" name="numero_documento" required pattern="[0-9]{6,10}" title="El documento debe contener solo números, entre 6 y 10 dígitos.">
-                    </p>
-
-                    <p>
                         <label for="correo">Correo electrónico:*</label><br>
                         <input type="email" id="correo" name="email" required>
                     </p>
 
-                    <p>
-                        <label for="celular">Celular / WhatsApp:*</label><br>
-                        <input type="tel" id="celular" name="telefono" required pattern="3[0-9]{9}" title="El celular debe tener exactamente 10 dígitos y comenzar por el número 3 (Ej: 3001234567).">
-                    </p>
+                    <div class="fila-formulario">
+                        <p>
+                            <label for="documento">Número de documento:*</label><br>
+                            <input type="text" id="documento" name="numero_documento" required pattern="[0-9]{6,10}" title="El documento debe contener solo números, entre 6 y 10 dígitos.">
+                        </p>
+
+                        <p>
+                            <label for="celular">Celular / WhatsApp:*</label><br>
+                            <input type="tel" id="celular" name="telefono" required pattern="3[0-9]{9}" title="El celular debe tener exactamente 10 dígitos y comenzar por el número 3 (Ej: 3001234567).">
+                        </p>
+                    </div>
                 </fieldset>
 
                 <!-- Grupo 2: Tu alquiler -->
@@ -141,6 +144,7 @@
                 <dd>6:00 a. m. a 2:00 p. m.</dd>
             </dl>
         </aside>
+        </div>
     </main>
 
     <!-- Pie de Página -->
