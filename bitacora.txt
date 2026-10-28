@@ -216,3 +216,92 @@ Todas las combinaciones de color y fuente del sitio se tomaron de las
 variables de :root y del mapa de uso de color del MiniReto 8; no se repitió
 ningún código de color fuera de :root, y ningún HTML contiene style="" ni
 etiquetas <style>.
+
+5. POSICIONAMIENTO Y DETALLES FINALES (MINIRETO 12)
+--------------------------------------------------
+- Etiqueta "Nuevo": se agregó un <span class="etiqueta-nueva"> dentro del
+  artículo "Alquiler de bicicletas" (el servicio que ahora incluye bicicletas
+  eléctricas). Se usó <span> porque no existe una etiqueta semántica más
+  específica para una pequeña insignia de texto; el artículo recibió
+  position: relative y la etiqueta position: absolute (top/right) para
+  anclarse a su esquina superior derecha sin desplazar el contenido del
+  artículo ni afectar el flujo normal del documento.
+- Color de la etiqueta: se usó Verde Ruta con texto blanco (4.8:1, apta para
+  texto normal) en lugar de Naranja Pedal con Azul Noche, porque esa segunda
+  combinación solo es apta para texto grande (3.1:1) y la etiqueta usa una
+  fuente pequeña (0.75rem).
+- Botón de WhatsApp: enlace con position: fixed, anclado a bottom/right,
+  visible en las tres páginas al hacer scroll, con texto visible ("💬
+  WhatsApp") y destino https://wa.me/573000000000 en una pestaña nueva. Para
+  que no tape el contenido final, se agregó padding-bottom al <footer>
+  equivalente al espacio que ocupa el botón.
+- Revisión final en DevTools: se recorrieron las tres páginas con Tab
+  comprobando que el foco es visible en todo momento (menú, enlaces,
+  tarjetas, tabla, formulario y botón de WhatsApp) y que no hay errores 404
+  en la pestaña Network (HTML, imágenes, styles.css y las fuentes de Google
+  cargan correctamente).
+- Limpieza de styles.css: la hoja quedó organizada en 5 secciones
+  comentadas (Variables, Base, Navegación, Modelo de caja y layout,
+  Posicionamiento) sin reglas duplicadas ni colores repetidos fuera de
+  :root.
+
+==================================================
+CIERRE DE LA SEMANA — RUEDA LIBRE v1.0
+==================================================
+
+Resumen de lo construido en cada MiniReto:
+1. Kilómetro 0: repositorio, estructura de carpetas, index.html base y
+   primer análisis de petición HTTP (200/404).
+2. La vitrina de Rueda Libre: contenido jerarquizado de inicio (encabezados,
+   listas, imágenes, enlaces).
+3. Tarifas claras: tablas accesibles de tarifas y recorridos, rutas
+   relativas entre carpetas.
+4. Rueda Libre v0.1: página de reservas inicial, menú y pie comunes a las
+   tres páginas.
+5. Estructura con significado: header/nav/main/section/article/aside/footer
+   en las tres páginas, sin divs ni spans innecesarios.
+6. El formulario de reservas: formulario completo con fieldsets, controles
+   adecuados y labels asociados.
+7. Reservas sin errores: validación nativa con las reglas de negocio del
+   cliente y navegación completa por teclado.
+8. Rueda Libre v0.2 en línea: auditoría de accesibilidad, mapa de contraste
+   WCAG y primera publicación en GitHub Pages.
+9. La identidad de Rueda Libre: css/styles.css con variables, Google Fonts
+   (Montserrat y Open Sans) y colores de marca aplicados por herencia.
+10. Navegación con estados y sin conflictos: id="menu", clase "activo",
+    resolución del conflicto de especificidad, estados :hover/:focus y
+    botones de llamada a la acción.
+11. Todo en su lugar: box-sizing: border-box, contenedor principal
+    centrado, portada con altura en vh, tarjetas de servicios, tablas y
+    formulario ordenados con la escala de espaciado.
+12. Rueda Libre v1.0: etiqueta "Nuevo" posicionada, botón flotante de
+    WhatsApp, limpieza final de la hoja de estilos y publicación de la
+    versión 1.0.
+
+Qué mejoraría:
+- El correo de contacto (hola@ruedalibre.example) sigue siendo un dominio
+  de ejemplo; en un lanzamiento real habría que reemplazarlo por el correo
+  verdadero del negocio.
+- La sección "Encuéntranos" podría tener una dirección y un mapa incrustado
+  en vez de solo un enlace genérico a "Medellín" en Google Maps.
+- El formulario de reservas se envía a un endpoint de prueba
+  (https://httpbin.org/post); falta conectarlo a un backend real o a un
+  servicio de formularios.
+- El sitio todavía no es responsive (eso es justamente el objetivo de la
+  semana 2, con Flexbox, Grid y media queries).
+
+MAPA DE CONSTRUCCIÓN DEL PRODUCTO FINAL
+--------------------------------------------------
+Los MiniRetos 1 a 4 construyeron la estructura y el contenido de las tres
+páginas (index.html, paginas/tarifas.html, paginas/reservas.html). Los
+MiniRetos 5 a 8 les dieron significado semántico, un formulario confiable
+con validación nativa y accesibilidad, y dejaron el sitio publicado como
+v0.2. Los MiniRetos 9 a 12 aplicaron la identidad visual de la marca sobre
+esa misma base (css/styles.css), sin crear archivos aislados: cada reto
+modificó o amplió los mismos archivos del repositorio. El MiniReto 12
+publica el resultado integrado como Rueda Libre v1.0, punto de partida de
+la semana 2 (responsive con Flexbox, Grid, media queries y Bootstrap).
+
+ENLACE PÚBLICO DE LA VERSIÓN v1.0 (GITHUB PAGES)
+--------------------------------------------------
+https://dnloropo.github.io/rueda-libre/
