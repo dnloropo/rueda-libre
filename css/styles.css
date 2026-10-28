@@ -159,7 +159,8 @@ main {
     gap: var(--espacio-lg);
 }
 
-.servicios article {
+.servicios article,
+.flota article {
     flex: 1 1 16rem;
     background-color: var(--blanco);
     border: 1px solid var(--gris-asfalto);
@@ -167,10 +168,38 @@ main {
     padding: var(--espacio-md);
 }
 
-.servicios article img {
+.servicios article img,
+.flota article img {
     width: 100%;
     height: auto;
     border-radius: 0.25rem;
+}
+
+/* Cuadrícula de la flota de bicicletas (MiniReto 2, semana 2):
+   el número de columnas se adapta solo al espacio disponible, sin
+   media queries, gracias a auto-fit + minmax */
+.flota {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--espacio-lg);
+}
+
+/* Cada tarjeta se ordena en columna con Flexbox para que el enlace
+   "Reservar" quede siempre al final, sin importar el largo de la
+   descripción */
+.flota article {
+    display: flex;
+    flex-direction: column;
+}
+
+.flota article .precio {
+    font-weight: 600;
+    color: var(--azul-noche);
+}
+
+.flota article .cta {
+    margin-top: auto;
+    align-self: flex-start;
 }
 
 /* Tablas */
