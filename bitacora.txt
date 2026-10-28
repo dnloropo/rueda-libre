@@ -339,3 +339,39 @@ Prueba al estrechar la ventana (DevTools, modo responsive):
   entre ellos.
 - En ningún punto aparece scroll horizontal: flex-wrap siempre reorganiza
   el contenido hacia abajo en vez de desbordarlo hacia los lados.
+
+2. LA FLOTA EN CUADRÍCULA (MINIRETO 2)
+--------------------------------------------------
+Se agregó la sección "Nuestra flota" en index.html con los 7 modelos del
+negocio (Urbana Clásica, Urbana Plegable, Montaña Trail, Gravel Aventura,
+Eléctrica Urbana, Infantil y Tándem), cada uno como un <article> con
+imagen, nombre, descripción, precio por hora y un enlace "Reservar".
+
+Nota de contenido: el repositorio solo cuenta con una fotografía de
+bicicleta (img/bicicleta.jpeg); se reutilizó esa misma imagen en los 7
+modelos en vez de inventar fotos distintas, y cada <img> tiene su propio
+texto alternativo describiendo el modelo correspondiente para no perder
+la información de accesibilidad.
+
+.flota usa display: grid con grid-template-columns: repeat(auto-fit,
+minmax(15rem, 1fr)) y gap, así que el número de columnas depende solo del
+ancho disponible, sin ninguna media query. Dentro de cada tarjeta,
+display: flex; flex-direction: column deja el enlace "Reservar" siempre
+al final (margin-top: auto en el enlace), aunque las descripciones tengan
+longitudes distintas.
+
+Columnas observadas (cálculo a partir de la fórmula del grid, ya que
+<main> tiene max-width: 60rem/960px, padding de 1rem por lado, tarjetas
+con minmax(15rem, 1fr) = 240px mínimo y gap de 2rem/32px):
+- Se necesitan aproximadamente 272px de ancho disponible por cada columna
+  adicional (240px de tarjeta + 32px de separación).
+- A 1280 px de ventana: el ancho útil de <main> queda topado en 960px -
+  2rem de padding = 928px → entran 3 columnas (3×240 + 2×32 = 784px,
+  caben; una 4ª columna necesitaría 1056px, no cabe).
+- A 900 px de ventana: el ancho útil es 900 - 2rem = 868px → también 3
+  columnas (784px ≤ 868px < 1056px).
+- A 500 px de ventana: el ancho útil es 500 - 2rem = 468px → solo 1
+  columna (2 columnas necesitarían 512px, no caben), cada tarjeta ocupa
+  todo el ancho con flex: 1fr.
+El séptimo modelo (Tándem) se agregó sin tocar una sola línea de CSS: la
+cuadrícula simplemente reorganiza sus columnas para incluirlo.
