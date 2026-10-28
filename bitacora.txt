@@ -580,3 +580,62 @@ Cinco clases consultadas en la documentación oficial de Bootstrap 5.3
    d-none oculta el elemento por defecto (display: none) y d-md-block lo
    vuelve a mostrar (display: block) desde el breakpoint md, sin
    necesidad de escribir una media query propia.
+
+3. INICIO MIGRA A BOOTSTRAP (MINIRETO 7)
+--------------------------------------------------
+Se agregó Bootstrap 5.3.3 por CDN a index.html (CSS y bundle de JS),
+con css/styles.css cargado DESPUÉS del CSS de Bootstrap para que
+nuestras reglas ganen la cascada sin !important.
+
+Se reemplazó la distribución en CSS propio de cuatro secciones:
+- Portada ("¿Quiénes somos?"): de .portada (CSS Grid propio) a
+  container + row + col-12 col-md-7 / col-12 col-md-5.
+- Nuestras rutas: de .galeria-rutas (Flexbox propio) a row + col-12
+  col-md-4, con cada tarjeta migrada al componente .card de Bootstrap.
+- Nuestra flota: se trajo tal cual el marcado ya construido y probado
+  en pruebas/catalogo-bootstrap.html (MiniReto 5), solo ajustando las
+  rutas de imágenes y enlaces (de ../img y ../paginas a img y paginas).
+- Beneficios: sección nueva en inicio, con el marcado ya construido en
+  el MiniReto 6 (título, cuatro beneficios y franja final "¿Listo para
+  rodar?"), igual ajuste de rutas.
+
+Las reglas de distribución que inicio ya no necesita (.portada,
+.portada-texto, .galeria-rutas, .galeria-rutas article, .flota, .flota
+article, .flota article .precio, .flota article .cta) se eliminaron de
+css/styles.css. Las que siguen usando tarifas.html y reservas.html
+(.reservas-layout, .fila-formulario, los estilos de tabla) se dejaron
+intactas, con un comentario que explica por qué siguen ahí hasta el
+MiniReto 8. La sección "Nuestros servicios" tampoco se tocó: no está
+en el alcance de este MiniReto, así que .servicios y sus reglas se
+conservan sin cambios.
+
+Tres conflictos entre los estilos propios y los de Bootstrap,
+identificados comparando la v1.5 con el resultado tras agregar el CDN,
+y resueltos sin !important:
+
+1. Color "success" de Bootstrap vs. verde de marca: btn-success,
+   text-success, bg-success y text-bg-success usan el --bs-success por
+   defecto de Bootstrap (#198754), distinto del --verde-ruta de marca
+   (#1E7A4F) que ya usaban los botones .cta existentes. Como
+   css/styles.css se carga después de bootstrap.min.css, redeclarar
+   --bs-success (y --bs-success-rgb) dentro de :root en nuestra propia
+   hoja basta para que todas las utilidades "success" hereden el verde
+   de marca automáticamente, sin tocar un solo selector de componente.
+2. Márgenes de los encabezados: el Reboot de Bootstrap fija
+   h1-h6 { margin-bottom: .5rem }, mucho menor que el margen que traían
+   por defecto los h2 de cada sección en la v1.5 (margen del navegador,
+   sin resetear). Se agregó una regla h2 { margin-bottom: var(--espacio-
+   lg); } en la sección BASE de styles.css, declarada después de
+   Bootstrap, para recuperar el espacio original entre cada título de
+   sección y su contenido.
+3. Subrayado en los enlaces de párrafo: el Reboot de Bootstrap define
+   a { color: var(--bs-link-color); text-decoration: underline; } sobre
+   el elemento <a>. Nuestra propia regla "a" (también un selector de
+   elemento, declarado después) ya ganaba en color por orden de
+   cascada, pero el subrayado de Bootstrap se colaba en enlaces como
+   "Tarifas y rutas" dentro de los párrafos, que no lo tenían en la
+   v1.5. Se agregó text-decoration: none a esa misma regla "a" (con
+   subrayado solo en :hover/:focus), sin !important.
+
+Probado index.html a 360px, 768px y 1280px tras publicar (ver
+verificación visual más abajo). Commit y push.
