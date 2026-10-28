@@ -144,12 +144,33 @@ main {
     padding: 0 var(--espacio-md);
 }
 
-/* Portada de inicio: alto mínimo relativo a la ventana */
+/* Portada de inicio: dos columnas con Grid (texto y foto), MiniReto 3.
+   Dos dimensiones reales (columna + alineación vertical), por eso Grid
+   en vez de Flexbox. */
 .portada {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    align-items: center;
+    gap: var(--espacio-lg);
     min-height: 50vh;
+}
+
+.portada-texto {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+/* Galería "Nuestras rutas": tres tarjetas en una sola fila (una sola
+   dimensión), por eso Flexbox en vez de Grid. */
+.galeria-rutas {
+    display: flex;
+    flex-direction: row;
+    gap: var(--espacio-lg);
+}
+
+.galeria-rutas article {
+    flex: 1;
 }
 
 /* Tarjetas de servicios */
@@ -160,7 +181,8 @@ main {
 }
 
 .servicios article,
-.flota article {
+.flota article,
+.galeria-rutas article {
     flex: 1 1 16rem;
     background-color: var(--blanco);
     border: 1px solid var(--gris-asfalto);
@@ -169,7 +191,8 @@ main {
 }
 
 .servicios article img,
-.flota article img {
+.flota article img,
+.galeria-rutas article img {
     width: 100%;
     height: auto;
     border-radius: 0.25rem;
@@ -226,6 +249,31 @@ td {
 thead th {
     background-color: var(--azul-noche);
     color: var(--blanco);
+}
+
+/* Reservas: formulario (2/3) e información de contacto (1/3) con Grid
+   (MiniReto 3). Dos dimensiones (ancho de columna + alineación), por eso
+   Grid en vez de Flexbox. */
+.reservas-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+    gap: var(--espacio-lg);
+}
+
+/* Fila del formulario con dos campos cortos relacionados (documento y
+   celular). Una sola dimensión (una fila), por eso Flexbox. */
+.fila-formulario {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--espacio-md);
+    margin-bottom: var(--espacio-md);
+}
+
+.fila-formulario p {
+    flex: 1 1 10rem;
+    margin-bottom: 0;
 }
 
 /* Formulario */
