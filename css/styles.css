@@ -1,0 +1,45 @@
+/* =====================================================
+   RUEDA LIBRE — HOJA DE ESTILOS
+   ===================================================== */
+
+/* -----------------------------------------------------
+   1. VARIABLES
+----------------------------------------------------- */
+:root {
+    /* Colores de marca */
+    --verde-ruta: #1E7A4F;
+    --naranja-pedal: #F39A2B;
+    --azul-noche: #14213D;
+    --crema: #FAF6EF;
+    --gris-asfalto: #5B6470;
+    --blanco: #FFFFFF;
+
+    /* Tipografías (con fuente de respaldo) */
+    --fuente-titulos: 'Montserrat', Arial, sans-serif;
+    --fuente-texto: 'Open Sans', Helvetica, sans-serif;
+
+    /* Escala de espaciado */
+    --espacio-sm: 0.5rem;
+    --espacio-md: 1rem;
+    --espacio-lg: 2rem;
+    --espacio-xl: 3rem;
+}
+
+/* -----------------------------------------------------
+   2. BASE (herencia desde <body>)
+----------------------------------------------------- */
+body {
+    font-family: var(--fuente-texto);
+    font-weight: 400;
+    color: var(--azul-noche);
+    background-color: var(--crema);
+    line-height: 1.6;
+    margin: 0;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+}
