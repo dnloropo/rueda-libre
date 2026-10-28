@@ -375,3 +375,42 @@ con minmax(15rem, 1fr) = 240px mínimo y gap de 2rem/32px):
   todo el ancho con flex: 1fr.
 El séptimo modelo (Tándem) se agregó sin tocar una sola línea de CSS: la
 cuadrícula simplemente reorganiza sus columnas para incluirlo.
+
+3. LAYOUT EN DOS DIMENSIONES: GRID + FLEXBOX (MINIRETO 3)
+--------------------------------------------------
+Se construyó el layout de escritorio combinando Grid y Flexbox según si
+cada caso necesitaba una o dos dimensiones. Decisión y justificación para
+cada uno de los seis casos:
+
+- Encabezado (header): Flexbox. Es una sola fila (una dimensión): nombre
+  del negocio en un extremo, menú en el otro, centrados verticalmente con
+  align-items.
+- Pie de página (.pie-contenido): Flexbox. También es una sola fila de
+  tres bloques (marca, contacto, horario) con separación uniforme; no
+  necesita control por filas y columnas a la vez.
+- Portada (.portada): Grid. Aquí sí hay dos dimensiones reales: columnas
+  (texto 3fr / foto 2fr) y alineación vertical del contenido dentro de esa
+  franja (align-items: center). grid-template-columns con fr reparte el
+  espacio proporcionalmente sin medidas fijas.
+- Galería "Nuestras rutas" (.galeria-rutas): Flexbox. Es una sola fila de
+  tres tarjetas que se reparten el espacio con flex: 1; no hay necesidad
+  de definir filas, así que basta una dimensión.
+- Reservas (.reservas-layout): Grid. El formulario y la información de
+  contacto deben quedar en proporción 2:1 como columnas definidas
+  (grid-template-columns: 2fr 1fr), con el contenido de cada una
+  alineado desde arriba (align-items: start) aunque tengan alturas
+  distintas; es un caso de dos columnas con control explícito de ancho.
+- Fila del formulario (.fila-formulario, documento + celular): Flexbox.
+  Es una sola fila de dos campos cortos que se reparten el espacio con
+  flex: 1 1 10rem y bajan de línea con flex-wrap si no caben; no hace
+  falta una cuadrícula para dos elementos en una fila.
+
+Criterio general aplicado: si el problema es "repartir elementos en una
+fila o columna", se usó Flexbox (una dimensión); si el problema es
+"definir filas Y columnas a la vez, con proporciones específicas entre
+ambas", se usó Grid (dos dimensiones).
+
+El menú, la cuadrícula de la flota y la validación nativa del formulario
+se revisaron después de estos cambios y siguen funcionando igual que
+antes: ninguno de los selectores nuevos entra en conflicto con los ya
+existentes.
