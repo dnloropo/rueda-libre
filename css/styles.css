@@ -26,6 +26,23 @@
 }
 
 /* -----------------------------------------------------
+   1b. INTEGRACIÓN CON BOOTSTRAP (MiniReto 7)
+----------------------------------------------------- */
+/* CONFLICTO 1 (resuelto sin !important): Bootstrap define su propio
+   "success" (#198754) en --bs-success dentro de su :root, usado por
+   btn-success, text-success, bg-success y text-bg-success. La flota y
+   los beneficios migrados (MiniRetos 5 y 6) usan esas utilidades, pero
+   el verde de marca es --verde-ruta (#1E7A4F), distinto. Como esta hoja
+   se carga DESPUÉS de bootstrap.min.css, redeclarar --bs-success aquí
+   (mismo :root) gana en la cascada sin tocar un solo selector de
+   componente ni usar !important: todas las utilidades "success" quedan
+   automáticamente en el verde de marca. */
+:root {
+    --bs-success: var(--verde-ruta);
+    --bs-success-rgb: 30, 122, 79;
+}
+
+/* -----------------------------------------------------
    2. BASE (herencia desde <body>)
 ----------------------------------------------------- */
 body {
@@ -44,8 +61,30 @@ h3 {
     font-weight: 700;
 }
 
+/* CONFLICTO 2 (resuelto sin !important): el Reboot de Bootstrap fija
+   h1-h6 { margin-bottom: .5rem }, mucho menos que el margen por
+   defecto del navegador que tenían los h2 de cada sección en la v1.5.
+   Un selector de elemento simple, declarado después de Bootstrap,
+   basta para recuperar el espacio original. */
+h2 {
+    margin-bottom: var(--espacio-lg);
+}
+
+/* CONFLICTO 3 (resuelto sin !important): el Reboot de Bootstrap también
+   define a { color: var(--bs-link-color); text-decoration: underline; }
+   sobre el elemento <a>. Como nuestra regla "a" también es un selector
+   de elemento y se declara después, el color verde ya ganaba por orden
+   de cascada, pero el subrayado de Bootstrap se colaba en los enlaces
+   de los párrafos (no lo tenía la v1.5). Se agrega text-decoration:none
+   a la misma regla, sin !important. */
 a {
     color: var(--verde-ruta);
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    text-decoration: underline;
 }
 
 /* Imágenes fluidas: ninguna imagen es más ancha que su contenedor
@@ -159,43 +198,21 @@ main {
     padding: 0 var(--espacio-md);
 }
 
-/* Portada de inicio mobile-first: base = una sola columna (texto y
-   foto apilados). Desde tablet (768px) se convierte en Grid de dos
-   columnas (ver media query más abajo; MiniReto 3 + MiniReto 4). */
-.portada {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--espacio-lg);
-}
+/* NOTA (MiniReto 7): .portada, .portada-texto, .galeria-rutas y .flota
+   se eliminaron de aquí porque inicio ya no las necesita — esa
+   distribución ahora sale de la grilla y las tarjetas (card) de
+   Bootstrap directamente en index.html. */
 
-.portada-texto {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* Galería "Nuestras rutas" mobile-first: base = tarjetas apiladas en
-   columna. Desde tablet se acomodan en una fila (ver media query). */
-.galeria-rutas {
-    display: flex;
-    flex-direction: column;
-    gap: var(--espacio-lg);
-}
-
-.galeria-rutas article {
-    flex: 1;
-}
-
-/* Tarjetas de servicios */
+/* Tarjetas de servicios (la sección "Nuestros servicios" de inicio
+   AÚN no se migra a Bootstrap — queda pendiente para un MiniReto
+   posterior, así que esta regla se conserva) */
 .servicios {
     display: flex;
     flex-wrap: wrap;
     gap: var(--espacio-lg);
 }
 
-.servicios article,
-.flota article,
-.galeria-rutas article {
+.servicios article {
     flex: 1 1 16rem;
     background-color: var(--blanco);
     border: 1px solid var(--gris-asfalto);
@@ -203,42 +220,14 @@ main {
     padding: var(--espacio-md);
 }
 
-.servicios article img,
-.flota article img,
-.galeria-rutas article img {
+.servicios article img {
     width: 100%;
     height: auto;
     border-radius: 0.25rem;
 }
 
-/* Cuadrícula de la flota de bicicletas (MiniReto 2, semana 2):
-   el número de columnas se adapta solo al espacio disponible, sin
-   media queries, gracias a auto-fit + minmax */
-.flota {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: var(--espacio-lg);
-}
-
-/* Cada tarjeta se ordena en columna con Flexbox para que el enlace
-   "Reservar" quede siempre al final, sin importar el largo de la
-   descripción */
-.flota article {
-    display: flex;
-    flex-direction: column;
-}
-
-.flota article .precio {
-    font-weight: 600;
-    color: var(--azul-noche);
-}
-
-.flota article .cta {
-    margin-top: auto;
-    align-self: flex-start;
-}
-
-/* Tablas */
+/* Tablas (todavía usadas por tarifas.html, sin migrar hasta el
+   MiniReto 8) */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -268,7 +257,8 @@ thead th {
     color: var(--blanco);
 }
 
-/* Reservas mobile-first: base = formulario e información de contacto
+/* Reservas mobile-first (todavía usada por reservas.html, sin migrar
+   hasta el MiniReto 8): base = formulario e información de contacto
    apilados en una sola columna. Desde tablet se reparten en proporción
    2:1 con Grid (ver media query; MiniReto 3 + MiniReto 4). */
 .reservas-layout {
@@ -278,7 +268,8 @@ thead th {
 }
 
 /* Fila del formulario con dos campos cortos relacionados (documento y
-   celular). Una sola dimensión (una fila), por eso Flexbox. */
+   celular, también en reservas.html, sin migrar hasta el MiniReto 8).
+   Una sola dimensión (una fila), por eso Flexbox. */
 .fila-formulario {
     display: flex;
     flex-direction: row;
@@ -432,18 +423,6 @@ footer {
         justify-content: flex-start;
     }
 
-    /* Portada: dos columnas (texto y foto), MiniReto 3 */
-    .portada {
-        grid-template-columns: 3fr 2fr;
-        align-items: center;
-        min-height: 50vh;
-    }
-
-    /* Galería de rutas: tres tarjetas en una fila */
-    .galeria-rutas {
-        flex-direction: row;
-    }
-
     /* Reservas: formulario (2/3) e información (1/3) en proporción */
     .reservas-layout {
         grid-template-columns: 2fr 1fr;
@@ -476,9 +455,7 @@ footer {
     }
 
     /* Más aire entre tarjetas en pantallas grandes */
-    .servicios,
-    .flota,
-    .galeria-rutas {
+    .servicios {
         gap: var(--espacio-xl);
     }
 }
