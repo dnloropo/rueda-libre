@@ -48,18 +48,32 @@ a {
     color: var(--verde-ruta);
 }
 
+/* Imágenes fluidas: ninguna imagen es más ancha que su contenedor
+   (MiniReto 4, enfoque mobile-first) */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Logo del encabezado: tamaño máximo fijo (reemplaza el antiguo
+   atributo width="180"), pero sigue sin desbordar en pantallas muy
+   angostas gracias a max-width: 100% de la regla general */
+.logo {
+    max-width: 10rem;
+}
+
 /* -----------------------------------------------------
    3. NAVEGACIÓN
 ----------------------------------------------------- */
 
-/* Encabezado: nombre/logo en un extremo y menú en el otro,
-   centrados verticalmente entre sí (MiniReto 1, semana 2) */
+/* Encabezado mobile-first: base = nombre/logo arriba y menú debajo,
+   centrados (MiniReto 4). Desde tablet (768px) se recupera la
+   distribución en fila del MiniReto 1 (ver media query más abajo). */
 header {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
     gap: var(--espacio-md);
     padding: var(--espacio-md);
 }
@@ -68,6 +82,7 @@ header {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--espacio-md);
     padding: 0;
     margin: 0;
@@ -144,15 +159,13 @@ main {
     padding: 0 var(--espacio-md);
 }
 
-/* Portada de inicio: dos columnas con Grid (texto y foto), MiniReto 3.
-   Dos dimensiones reales (columna + alineación vertical), por eso Grid
-   en vez de Flexbox. */
+/* Portada de inicio mobile-first: base = una sola columna (texto y
+   foto apilados). Desde tablet (768px) se convierte en Grid de dos
+   columnas (ver media query más abajo; MiniReto 3 + MiniReto 4). */
 .portada {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    align-items: center;
+    grid-template-columns: 1fr;
     gap: var(--espacio-lg);
-    min-height: 50vh;
 }
 
 .portada-texto {
@@ -161,11 +174,11 @@ main {
     justify-content: center;
 }
 
-/* Galería "Nuestras rutas": tres tarjetas en una sola fila (una sola
-   dimensión), por eso Flexbox en vez de Grid. */
+/* Galería "Nuestras rutas" mobile-first: base = tarjetas apiladas en
+   columna. Desde tablet se acomodan en una fila (ver media query). */
 .galeria-rutas {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: var(--espacio-lg);
 }
 
@@ -239,9 +252,13 @@ caption {
     margin-bottom: var(--espacio-sm);
 }
 
+/* Mobile-first: relleno y letra reducidos en móvil para que las tablas
+   se lean sin desplazamiento lateral (MiniReto 4); crecen por etapas en
+   tablet y escritorio (ver media queries más abajo) */
 th,
 td {
-    padding: var(--espacio-sm) var(--espacio-md);
+    padding: 0.4rem 0.5rem;
+    font-size: 0.85rem;
     border: 1px solid var(--gris-asfalto);
     text-align: left;
 }
@@ -251,13 +268,12 @@ thead th {
     color: var(--blanco);
 }
 
-/* Reservas: formulario (2/3) e información de contacto (1/3) con Grid
-   (MiniReto 3). Dos dimensiones (ancho de columna + alineación), por eso
-   Grid en vez de Flexbox. */
+/* Reservas mobile-first: base = formulario e información de contacto
+   apilados en una sola columna. Desde tablet se reparten en proporción
+   2:1 con Grid (ver media query; MiniReto 3 + MiniReto 4). */
 .reservas-layout {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    align-items: start;
+    grid-template-columns: 1fr;
     gap: var(--espacio-lg);
 }
 
@@ -377,14 +393,12 @@ footer {
     padding-bottom: var(--espacio-xl);
 }
 
-/* Pie de página en tres bloques en fila (MiniReto 1, semana 2) */
+/* Pie de página mobile-first: base = tres bloques apilados en
+   columna. Desde tablet se acomodan en una fila (MiniReto 1 + 4). */
 .pie-contenido {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--espacio-lg);
+    flex-direction: column;
+    gap: var(--espacio-md);
 }
 
 .pie-bloque {
@@ -400,4 +414,71 @@ footer {
     margin-top: var(--espacio-md);
     color: var(--gris-asfalto);
     font-size: 0.875rem;
+}
+
+/* -----------------------------------------------------
+   6. MEDIA QUERIES (MiniReto 4: Rueda Libre v1.5, mobile-first)
+----------------------------------------------------- */
+
+/* TABLET (min-width: 768px) */
+@media (min-width: 768px) {
+    /* Encabezado: nombre/logo y menú en extremos opuestos (MiniReto 1) */
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    #menu {
+        justify-content: flex-start;
+    }
+
+    /* Portada: dos columnas (texto y foto), MiniReto 3 */
+    .portada {
+        grid-template-columns: 3fr 2fr;
+        align-items: center;
+        min-height: 50vh;
+    }
+
+    /* Galería de rutas: tres tarjetas en una fila */
+    .galeria-rutas {
+        flex-direction: row;
+    }
+
+    /* Reservas: formulario (2/3) e información (1/3) en proporción */
+    .reservas-layout {
+        grid-template-columns: 2fr 1fr;
+        align-items: start;
+    }
+
+    /* Pie de página: tres bloques en fila */
+    .pie-contenido {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    /* Tablas: relleno y letra intermedios */
+    th,
+    td {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* ESCRITORIO (min-width: 1200px) */
+@media (min-width: 1200px) {
+    /* Tablas: relleno y letra completos, como en la v1.0 original */
+    th,
+    td {
+        padding: var(--espacio-sm) var(--espacio-md);
+        font-size: 1rem;
+    }
+
+    /* Más aire entre tarjetas en pantallas grandes */
+    .servicios,
+    .flota,
+    .galeria-rutas {
+        gap: var(--espacio-xl);
+    }
 }
