@@ -480,3 +480,64 @@ en todas las anchuras.
 ENLACE PÚBLICO DE LA VERSIÓN v1.5 (GITHUB PAGES)
 --------------------------------------------------
 https://dnloropo.github.io/rueda-libre/
+
+==================================================
+BITÁCORA DE PRUEBAS Y DECISIONES - RUEDA LIBRE v2.0-beta (DÍA 2 SEM. 2: BOOTSTRAP)
+==================================================
+
+1. LA FLOTA EN BOOTSTRAP: PRIMERA COMPARACIÓN (MINIRETO 5)
+--------------------------------------------------
+Se creó pruebas/catalogo-bootstrap.html con la plantilla oficial de
+Bootstrap 5.3 (CSS y bundle de JS por CDN, jsDelivr, versión 5.3.3).
+Nota: se usó el enlace del CDN sin el atributo integrity (el hash SRI que
+trae la plantilla oficial) porque no se pudo confirmar el hash exacto
+contra la documentación en este entorno, y copiar uno incorrecto habría
+bloqueado la carga del archivo por completo (el navegador rechaza el
+recurso si el hash no coincide); se prefirió una página funcional sin SRI
+a una que no cargara por un hash mal copiado.
+
+La flota (7 modelos) se reconstruyó solo con la grilla: cada tarjeta es
+un .col-12.col-sm-6.col-lg-4.col-xl-3 dentro de un .row.g-4, usando el
+componente .card de Bootstrap para el contenido. No hay <style> ni
+styles.css enlazado en esta página; toda la distribución sale de clases.
+
+Nota sobre "tiempo invertido": como esta implementación la hizo Claude
+directamente (no es un cronómetro de trabajo humano), el dato de tiempo
+en minutos no es una métrica honesta de comparación aquí. En su lugar, la
+comparación se centra en líneas de CSS vs. clases usadas, que sí es
+medible objetivamente:
+
+- CSS propio de distribución para la flota (v1.5, css/styles.css):
+  aproximadamente 10 líneas de declaraciones: .flota (display: grid,
+  grid-template-columns con auto-fit/minmax, gap) + .flota article
+  (display: flex, flex-direction) + .flota article .cta (margin-top:
+  auto, align-self), más la parte que comparte con .servicios/.galeria-
+  rutas article para el aspecto de tarjeta (fondo, borde, radio, padding).
+- Bootstrap (pruebas/catalogo-bootstrap.html): 0 líneas de CSS propio.
+  La distribución completa sale de 4 clases en cada columna
+  (col-12 col-sm-6 col-lg-4 col-xl-3) + 1 en el contenedor (g-4), y el
+  aspecto de tarjeta sale del componente .card (sin escribir ni un color
+  ni un borde).
+
+Qué dio Bootstrap sin esfuerzo:
+- El componente .card: borde, esquinas redondeadas y estructura
+  (card-img-top, card-body) listos, sin declarar background-color,
+  border ni border-radius.
+- h-100 + d-flex + flex-column + mt-auto en el botón: tarjetas de la
+  misma altura con "Reservar" siempre al final, sin escribir ni un
+  display: flex a mano (en la v1.5 esto costó CSS propio).
+- La reactividad en los tres puntos de quiebre (sm/lg/xl) sin escribir
+  una sola media query.
+
+Qué control se perdió:
+- La v1.5 usaba auto-fit/minmax, así que el número de columnas se
+  adapta de forma continua a cualquier ancho disponible; la grilla de
+  Bootstrap salta en los breakpoints fijos (p. ej. 2 columnas se
+  mantienen igual en todo el rango sm, aunque sobre o falte espacio).
+- El aspecto exacto de la tarjeta (colores de marca, radio, tipografía)
+  es el de Bootstrap por defecto; para que coincida con la identidad de
+  Rueda Libre habría que sobrescribirlo con CSS propio o variables de
+  Sass de Bootstrap, lo que el MiniReto 5 pedía evitar a propósito.
+- Las clases son más verbosas en el HTML (5 clases por tarjeta) frente a
+  una sola clase propia (.flota article) que concentraba la misma regla
+  en la hoja de estilos.
