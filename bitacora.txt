@@ -305,3 +305,37 @@ la semana 2 (responsive con Flexbox, Grid, media queries y Bootstrap).
 ENLACE PÚBLICO DE LA VERSIÓN v1.0 (GITHUB PAGES)
 --------------------------------------------------
 https://dnloropo.github.io/rueda-libre/
+
+==================================================
+BITÁCORA DE PRUEBAS Y DECISIONES - RUEDA LIBRE v1.5 (DÍA 4: SEMANA 2)
+==================================================
+
+1. ENCABEZADO Y PIE CON FLEXBOX (MINIRETO 1)
+--------------------------------------------------
+Se convirtió <header> en un contenedor flex (display: flex;
+justify-content: space-between; align-items: center; flex-wrap: wrap) con
+dos hijos: el nombre/logo del negocio en un extremo y el <nav> en el otro,
+alineados verticalmente entre sí. El menú (#menu) ya era flex desde el
+MiniReto 10, así que solo se le agregó flex-wrap: wrap para que sus
+enlaces bajen de línea en vez de desbordarse, y se le quitó cualquier
+margen residual (ya no dependía de margin ni de inline-block).
+
+El <footer> se reestructuró en tres bloques (marca, contacto, horario)
+dentro de un contenedor .pie-contenido con display: flex; flex-wrap: wrap;
+justify-content: space-between; align-items: flex-start; gap, y cada
+bloque usa flex: 1 1 12rem para repartirse el espacio sin quebrarse en
+columnas desiguales.
+
+Prueba al estrechar la ventana (DevTools, modo responsive):
+- Desde el ancho completo hasta ~700px, el nombre y el menú permanecen en
+  la misma fila (extremos opuestos); por debajo de ese punto el espacio ya
+  no alcanza para los tres enlaces del menú en una sola línea y, gracias a
+  flex-wrap: wrap, el menú pasa a dos líneas sin que el encabezado se
+  desborde ni se superponga con el nombre del negocio.
+- El pie se comporta igual: los tres bloques (marca, contacto, horario)
+  se ven en una sola fila hasta que el ancho disponible por bloque cae por
+  debajo de ~12rem (192px); a partir de ahí, flex-wrap: wrap los apila en
+  columna, uno debajo del otro, manteniendo la separación uniforme (gap)
+  entre ellos.
+- En ningún punto aparece scroll horizontal: flex-wrap siempre reorganiza
+  el contenido hacia abajo en vez de desbordarlo hacia los lados.
