@@ -191,3 +191,28 @@ Corrección (sin !important ni estilos en línea): se agregó la regla
 con especificidad (1,1,1). Al combinar el id, la clase y el elemento en un
 solo selector, su especificidad supera a la de "#menu a" (1,0,1) y el enlace
 activo vuelve a mostrarse en verde con un subrayado adicional.
+
+3. MEDICIÓN DEL ANCHO DE UNA TARJETA CON BOX-SIZING (MINIRETO 11)
+--------------------------------------------------
+Tarjeta de servicio (.servicios article): flex-basis 16rem (256px),
+padding: var(--espacio-md) = 1rem (16px) en cada lado, border: 1px en cada lado.
+
+- Con box-sizing: content-box (valor por defecto del navegador): el padding
+  y el borde se SUMAN al ancho de contenido de 256px.
+  Ancho total = 256 + (16*2) + (1*2) = 256 + 32 + 2 = 290px.
+- Con box-sizing: border-box (el aplicado en el sitio, mediante el selector
+  universal "*, *::before, *::after { box-sizing: border-box; }"): el padding
+  y el borde quedan INCLUIDOS dentro de los 256px.
+  Ancho total = 256px (el contenido interno se reduce a 256 - 32 - 2 = 222px
+  para dejar espacio al padding y al borde).
+
+Verificado en DevTools (Computed): con border-box, el "Ancho renderizado" de
+la tarjeta coincide con el valor de flex-basis que se definió en el CSS, en
+vez de crecer por el padding y el borde como ocurría con content-box.
+
+4. MAPA DE USO DE COLOR APLICADO EN CSS (MINIRETOS 9-11)
+--------------------------------------------------
+Todas las combinaciones de color y fuente del sitio se tomaron de las
+variables de :root y del mapa de uso de color del MiniReto 8; no se repitió
+ningún código de color fuera de :root, y ningún HTML contiene style="" ni
+etiquetas <style>.
