@@ -541,3 +541,42 @@ Qué control se perdió:
 - Las clases son más verbosas en el HTML (5 clases por tarjeta) frente a
   una sola clase propia (.flota article) que concentraba la misma regla
   en la hoja de estilos.
+
+2. SIN UNA LÍNEA DE CSS: UTILIDADES (MINIRETO 6)
+--------------------------------------------------
+En la misma página de pruebas, debajo de la flota, se construyó la
+sección "¿Por qué Rueda Libre?" (4 beneficios: bicicletas revisadas,
+casco y candado incluidos, guías certificados, puntos de devolución) y
+la franja final "¿Listo para rodar?" con su enlace a reservas, usando
+solo utilidades de Bootstrap: ningún <style>, ningún atributo style="" y
+ninguna clase inventada por fuera de Bootstrap 5.3.
+
+La franja pasa de columna (d-flex flex-column) en móvil a fila
+(flex-md-row) desde el breakpoint md, con los elementos alineados con
+justify-content-between/align-items-center y separados con gap-4 (sin
+margin ni padding manual entre ellos). El elemento decorativo (una foto
+circular) usa d-none d-md-block: no existe en el DOM visualmente en
+móvil y aparece desde md. El enlace de la franja se destacó únicamente
+con utilidades de color y espaciado (bg-white, text-success, px-4, py-2,
+rounded-pill), sin el componente .btn, que el MiniReto 6 pide dejar para
+mañana.
+
+Cinco clases consultadas en la documentación oficial de Bootstrap 5.3
+(https://getbootstrap.com/docs/5.3/utilities/) y qué hace cada una:
+1. fs-1: fija el tamaño de fuente al nivel 1 de la escala tipográfica de
+   Bootstrap (el más grande, usado aquí para los íconos de cada
+   beneficio), sin tocar font-size a mano.
+2. text-bg-success: utilidad combinada que aplica a la vez el color de
+   fondo "success" y un color de texto con contraste adecuado sobre ese
+   fondo (evita calcular el contraste manualmente, como sí se hizo a
+   mano con los colores de marca en la v1.0).
+3. rounded-pill: redondea los bordes al máximo (forma de píldora),
+   pensada para botones o enlaces destacados como el de "Reservar ahora"
+   en la franja.
+4. gap-4: aplica gap (separación entre elementos flex/grid) usando la
+   escala de espaciado de Bootstrap, equivalente a lo que en CSS propio
+   se escribió a mano con la variable --espacio-lg.
+5. d-none / d-md-block: pareja de utilidades de display responsive;
+   d-none oculta el elemento por defecto (display: none) y d-md-block lo
+   vuelve a mostrar (display: block) desde el breakpoint md, sin
+   necesidad de escribir una media query propia.
