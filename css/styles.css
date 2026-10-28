@@ -43,3 +43,74 @@ h3 {
     font-family: var(--fuente-titulos);
     font-weight: 700;
 }
+
+a {
+    color: var(--verde-ruta);
+}
+
+/* -----------------------------------------------------
+   3. NAVEGACIÓN
+----------------------------------------------------- */
+#menu {
+    list-style: none;
+    display: flex;
+    gap: var(--espacio-md);
+    padding: 0;
+    margin: 0;
+}
+
+/* Regla del compañero (adaptada a nuestras variables) */
+#menu a {
+    color: var(--gris-asfalto);
+    text-decoration: none;
+    font-weight: 600;
+    padding: var(--espacio-sm) 0;
+}
+
+.activo {
+    color: var(--verde-ruta);
+    font-weight: 600;
+}
+
+/* #menu a tiene especificidad (1,0,1) [1 id + 1 elemento],
+   mientras que .activo tiene especificidad (0,1,0) [1 clase].
+   Un selector de id siempre pesa más que cualquier cantidad de clases, así
+   que #menu a gana y pinta el enlace activo de gris en vez de verde. Se
+   soluciona subiendo la especificidad de .activo a (1,1,1), combinándola
+   con el mismo contexto, sin usar !important: */
+#menu a.activo {
+    color: var(--verde-ruta);
+    border-bottom: 2px solid var(--verde-ruta);
+}
+
+#menu a:hover,
+#menu a:focus {
+    color: var(--verde-ruta);
+    text-decoration: underline;
+}
+
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid var(--azul-noche);
+    outline-offset: 2px;
+}
+
+/* Botones de llamada a la acción ("Reservar ahora") */
+.cta {
+    display: inline-block;
+    background-color: var(--verde-ruta);
+    color: var(--blanco);
+    padding: var(--espacio-sm) var(--espacio-md);
+    border-radius: 0.25rem;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.cta:hover,
+.cta:focus {
+    background-color: var(--azul-noche);
+    color: var(--blanco);
+}
