@@ -51,9 +51,23 @@ a {
 /* -----------------------------------------------------
    3. NAVEGACIÓN
 ----------------------------------------------------- */
+
+/* Encabezado: nombre/logo en un extremo y menú en el otro,
+   centrados verticalmente entre sí (MiniReto 1, semana 2) */
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--espacio-md);
+    padding: var(--espacio-md);
+}
+
 #menu {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     gap: var(--espacio-md);
     padding: 0;
     margin: 0;
@@ -284,4 +298,29 @@ button[type="submit"]:focus {
 /* Espacio extra para que el botón flotante no tape el contenido final */
 footer {
     padding-bottom: var(--espacio-xl);
+}
+
+/* Pie de página en tres bloques en fila (MiniReto 1, semana 2) */
+.pie-contenido {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--espacio-lg);
+}
+
+.pie-bloque {
+    flex: 1 1 12rem;
+}
+
+.pie-bloque p {
+    margin: var(--espacio-sm) 0 0;
+    color: var(--gris-asfalto);
+}
+
+.pie-copy {
+    margin-top: var(--espacio-md);
+    color: var(--gris-asfalto);
+    font-size: 0.875rem;
 }
