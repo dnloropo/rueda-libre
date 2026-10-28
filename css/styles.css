@@ -235,3 +235,53 @@ button[type="submit"]:hover,
 button[type="submit"]:focus {
     background-color: var(--azul-noche);
 }
+
+/* -----------------------------------------------------
+   5. POSICIONAMIENTO (MiniReto 12)
+----------------------------------------------------- */
+
+/* Ancla de referencia para la etiqueta "Nuevo" */
+.servicio-destacado {
+    position: relative;
+}
+
+.etiqueta-nueva {
+    position: absolute;
+    top: var(--espacio-sm);
+    right: var(--espacio-sm);
+    background-color: var(--verde-ruta);
+    color: var(--blanco);
+    font-family: var(--fuente-texto);
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+/* Se usó Verde Ruta con texto blanco (4.8:1, apta para texto normal) en vez
+   de Naranja Pedal: esta última solo es apta para texto grande y la
+   etiqueta usa una fuente pequeña (0.75rem). */
+
+/* Botón flotante de WhatsApp, visible en las tres páginas al hacer scroll */
+.whatsapp-flotante {
+    position: fixed;
+    bottom: var(--espacio-md);
+    right: var(--espacio-md);
+    background-color: var(--verde-ruta);
+    color: var(--blanco);
+    padding: var(--espacio-sm) var(--espacio-md);
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.whatsapp-flotante:hover,
+.whatsapp-flotante:focus {
+    background-color: var(--azul-noche);
+}
+
+/* Espacio extra para que el botón flotante no tape el contenido final */
+footer {
+    padding-bottom: var(--espacio-xl);
+}
