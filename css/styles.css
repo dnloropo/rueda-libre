@@ -95,67 +95,17 @@ img {
     display: block;
 }
 
-/* Logo del encabezado: tamaño máximo fijo (reemplaza el antiguo
-   atributo width="180"), pero sigue sin desbordar en pantallas muy
-   angostas gracias a max-width: 100% de la regla general */
-.logo {
-    max-width: 10rem;
-}
-
 /* -----------------------------------------------------
    3. NAVEGACIÓN
 ----------------------------------------------------- */
 
-/* Encabezado mobile-first: base = nombre/logo arriba y menú debajo,
-   centrados (MiniReto 4). Desde tablet (768px) se recupera la
-   distribución en fila del MiniReto 1 (ver media query más abajo). */
-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--espacio-md);
-    padding: var(--espacio-md);
-}
-
-#menu {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--espacio-md);
-    padding: 0;
-    margin: 0;
-}
-
-/* Regla del compañero (adaptada a nuestras variables) */
-#menu a {
-    color: var(--gris-asfalto);
-    text-decoration: none;
-    font-weight: 600;
-    padding: var(--espacio-sm) 0;
-}
-
-.activo {
-    color: var(--marron-ruta);
-    font-weight: 600;
-}
-
-/* #menu a tiene especificidad (1,0,1) [1 id + 1 elemento],
-   mientras que .activo tiene especificidad (0,1,0) [1 clase].
-   Un selector de id siempre pesa más que cualquier cantidad de clases, así
-   que #menu a gana y pinta el enlace activo de gris en vez de verde. Se
-   soluciona subiendo la especificidad de .activo a (1,1,1), combinándola
-   con el mismo contexto, sin usar !important: */
-#menu a.activo {
-    color: var(--marron-ruta);
-    border-bottom: 2px solid var(--marron-ruta);
-}
-
-#menu a:hover,
-#menu a:focus {
-    color: var(--marron-ruta);
-    text-decoration: underline;
-}
+/* NOTA (MiniReto 9): el <header>/<nav>/#menu propio (Flexbox del
+   MiniReto 1, mobile-first del MiniReto 4) se reemplazó por la navbar
+   colapsable de Bootstrap (navbar, navbar-expand-lg, navbar-toggler,
+   collapse) directamente en el HTML de las tres páginas. Por eso se
+   eliminan aquí .logo, header, #menu, #menu a, .activo y .cta — ya no
+   hay ningún elemento que los use. El estado "página actual" ahora lo
+   da la clase .nav-link.active + aria-current="page" de Bootstrap. */
 
 a:focus,
 button:focus,
@@ -166,23 +116,6 @@ textarea:focus {
     outline-offset: 2px;
 }
 
-/* Botones de llamada a la acción ("Reservar ahora") */
-.cta {
-    display: inline-block;
-    background-color: var(--marron-ruta);
-    color: var(--blanco);
-    padding: var(--espacio-sm) var(--espacio-md);
-    border-radius: 0.25rem;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.cta:hover,
-.cta:focus {
-    background-color: var(--negro-noche);
-    color: var(--blanco);
-}
-
 /* -----------------------------------------------------
    4. MODELO DE CAJA Y LAYOUT
 ----------------------------------------------------- */
@@ -190,6 +123,15 @@ textarea:focus {
 *::before,
 *::after {
     box-sizing: border-box;
+}
+
+/* Carrusel de promociones (MiniReto 10): las 3 fotos de promoción no
+   comparten relación de aspecto, así que se recorta cada una a una
+   altura fija (object-fit: cover) para que el carrusel no salte de
+   tamaño entre diapositivas. Bootstrap no resuelve esto por sí solo. */
+.carousel-item img {
+    height: 20rem;
+    object-fit: cover;
 }
 
 /* NOTA (MiniReto 8): el max-width:60rem fijo que tenía <main> se quitó
@@ -276,42 +218,23 @@ legend {
     padding: 0 var(--espacio-sm);
 }
 
-label {
-    display: block;
-    margin-bottom: var(--espacio-sm);
-    font-weight: 600;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="date"],
-input[type="number"],
-select,
-textarea {
-    display: block;
-    width: 100%;
-    padding: var(--espacio-sm);
-    margin-bottom: var(--espacio-md);
-    border: 1px solid var(--gris-asfalto);
-    border-radius: 0.25rem;
-    font-family: var(--fuente-texto);
-}
-
-button[type="submit"] {
-    background-color: var(--marron-ruta);
-    color: var(--blanco);
-    border: none;
-    padding: var(--espacio-md) var(--espacio-lg);
-    border-radius: 0.25rem;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-button[type="submit"]:hover,
-button[type="submit"]:focus {
-    background-color: var(--negro-noche);
-}
+/* NOTA / CONFLICTO (MiniReto 11): las reglas propias de label,
+   input[type=...]/select/textarea y button[type="submit"] se eliminaron
+   de aquí. El formulario de reservas.html ahora usa los componentes de
+   formulario de Bootstrap (form-label, form-control, form-select,
+   form-check, form-check-label, btn). Detectado comparando el DevTools
+   antes/después: la regla propia "label { display:block; ... }" también
+   pintaba los .form-check-label de los radios/checkbox, y al forzarlos a
+   display:block rompía su línea junto al círculo/casilla (el label caía
+   debajo en vez de al lado). Además, "input[type=...]" (specificidad
+   0-1-1) ganaba por sobre .form-control (0-1-0) pero select/textarea
+   (specificidad 0-0-1) perdían frente a .form-select/.form-control
+   (0-1-0): los campos de texto quedaban con un estilo distinto al de los
+   select/textarea. Se resolvió quitando las tres reglas (sin
+   !important) y dejando que Bootstrap controle look & feel + estados
+   is-valid/is-invalid de forma consistente en todo el formulario.
+   fieldset y legend sí se conservan: Bootstrap no los estiliza y no hay
+   ningún conflicto con ellos. */
 
 /* -----------------------------------------------------
    5. POSICIONAMIENTO (MiniReto 12)
@@ -392,15 +315,9 @@ footer {
 
 /* TABLET (min-width: 768px) */
 @media (min-width: 768px) {
-    /* Encabezado: nombre/logo y menú en extremos opuestos (MiniReto 1) */
-    header {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    #menu {
-        justify-content: flex-start;
-    }
+    /* NOTA (MiniReto 9): las reglas de header/#menu en fila desde
+       tablet se eliminaron de aquí — la navbar de Bootstrap ya resuelve
+       su propio colapso con navbar-expand-lg (desde 992px). */
 
     /* Pie de página: tres bloques en fila */
     .pie-contenido {

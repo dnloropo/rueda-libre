@@ -15,19 +15,32 @@
 </head>
 <body>
 
-    <!-- Encabezado con Navegación Principal -->
-    <header>
-        <a href="../index.html">
-            <img src="../img/logo.jpeg" alt="Logo de Rueda Libre" class="logo">
-        </a>
-        <nav aria-label="Navegación principal">
-            <ul id="menu">
-                <li><a href="../index.html">Inicio</a></li>
-                <li><a href="tarifas.html" class="activo">Tarifas y rutas</a></li>
-                <li><a href="reservas.html">Reservas</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Encabezado con Navegación Principal (MiniReto 9: navbar colapsable
+         de Bootstrap, reemplaza el <header>/<nav>/#menu de la semana 1) -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Navegación principal">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+                <img src="../img/logo.jpeg" alt="" width="36" height="36" class="rounded-circle">
+                Rueda Libre
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarRL" aria-controls="navbarRL" aria-expanded="false" aria-label="Abrir menú de navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarRL">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="tarifas.html">Tarifas y rutas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservas.html">Reservas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <!-- Contenido Principal (MiniReto 8: distribución migrada a la grilla
          de Bootstrap; tablas e información complementaria en dos columnas
@@ -114,7 +127,7 @@
                     </tr>
                 </tbody>
             </table>
-            <p><a href="reservas.html" class="cta">👉 Reservar ahora un recorrido</a></p>
+            <a href="reservas.html" class="btn btn-primary">👉 Reservar ahora un recorrido</a>
         </section>
 
         </div>
