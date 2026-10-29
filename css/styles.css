@@ -43,6 +43,69 @@
 }
 
 /* -----------------------------------------------------
+   1c. IDENTIDAD DE MARCA SOBRE BOOTSTRAP (MiniReto 12)
+----------------------------------------------------- */
+/* Variables globales de Bootstrap (--bs-*) sobrescritas con los valores
+   de marca. Como styles.css se carga después de bootstrap.min.css, basta
+   con redeclararlas en :root — sin !important y sin tocar el archivo de
+   Bootstrap — para que TODAS las utilidades que dependen de ellas
+   (btn-primary, text-primary, bg-primary, border-primary, los enlaces
+   por defecto, el radio de bordes de card/modal/alert/input...) hereden
+   la marca automáticamente. */
+:root {
+    --bs-primary: var(--marron-ruta);
+    --bs-primary-rgb: 92, 64, 51;
+    --bs-body-font-family: var(--fuente-texto);
+    --bs-link-color: var(--marron-ruta);
+    --bs-link-color-rgb: 92, 64, 51;
+    --bs-link-hover-color: var(--negro-noche);
+    --bs-link-hover-color-rgb: 27, 21, 18;
+    --bs-border-radius: 0.5rem;
+}
+
+/* Botón principal (.btn-primary, el de "Reservar"): variables propias
+   del componente botón (--bs-btn-*) para que el reposo use Marrón Ruta
+   y los estados hover/active oscurezcan a Negro Noche, igual que el
+   resto de elementos interactivos de la marca (enlaces, .whatsapp-
+   flotante). Sin !important: .btn-primary ya tiene más especificidad
+   que los valores por defecto que trae el propio componente. */
+.btn-primary {
+    --bs-btn-bg: var(--marron-ruta);
+    --bs-btn-border-color: var(--marron-ruta);
+    --bs-btn-hover-bg: var(--negro-noche);
+    --bs-btn-hover-border-color: var(--negro-noche);
+    --bs-btn-active-bg: var(--negro-noche);
+    --bs-btn-active-border-color: var(--negro-noche);
+    --bs-btn-disabled-bg: var(--marron-ruta);
+    --bs-btn-disabled-border-color: var(--marron-ruta);
+    --bs-btn-focus-shadow-rgb: 92, 64, 51;
+}
+
+/* Variante propia de botón para Terracota Pedal (no es ninguna de las
+   variantes que trae Bootstrap: btn-primary/secondary/success/...). Se
+   usa en los CTA "de consulta" (Ver tarifas, Ver recorridos, Ver
+   políticas de alquiler), reservando btn-primary para "Reservar". Texto
+   en negro en reposo: con Terracota Pedal (#B5651D) de fondo, el blanco
+   solo alcanza ~4.3:1 de contraste (no cumple 4.5:1 para texto normal);
+   el negro sobre el mismo fondo da ~4.8:1. En hover/active se oscurece a
+   Negro Noche y el texto pasa a blanco (contraste ~18:1). */
+.btn-terracota {
+    --bs-btn-color: #000;
+    --bs-btn-bg: var(--terracota-pedal);
+    --bs-btn-border-color: var(--terracota-pedal);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--negro-noche);
+    --bs-btn-hover-border-color: var(--negro-noche);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--negro-noche);
+    --bs-btn-active-border-color: var(--negro-noche);
+    --bs-btn-disabled-color: #000;
+    --bs-btn-disabled-bg: var(--terracota-pedal);
+    --bs-btn-disabled-border-color: var(--terracota-pedal);
+    --bs-btn-focus-shadow-rgb: 181, 101, 29;
+}
+
+/* -----------------------------------------------------
    2. BASE (herencia desde <body>)
 ----------------------------------------------------- */
 body {
@@ -257,21 +320,30 @@ legend {
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
 }
-/* Se usó Verde Ruta con texto blanco (4.8:1, apta para texto normal) en vez
-   de Naranja Pedal: esta última solo es apta para texto grande y la
-   etiqueta usa una fuente pequeña (0.75rem). */
+/* Se usó Marrón Ruta con texto blanco (~9.4:1, cumple de sobra para
+   texto normal) en vez de Terracota Pedal: con fondo Terracota Pedal el
+   texto blanco apenas llega a ~4.3:1 (no cumple 4.5:1) y la etiqueta usa
+   una fuente pequeña (0.75rem), por debajo del umbral de "texto grande"
+   que permitiría un mínimo de 3:1. */
 
-/* Botón flotante de WhatsApp, visible en las tres páginas al hacer scroll */
+/* Botón flotante de WhatsApp, visible en las tres páginas al hacer
+   scroll. MiniReto 12: pasa a ser un botón circular solo-ícono (bi-
+   whatsapp de Bootstrap Icons) — por eso lleva aria-label en el <a> del
+   HTML, ya que ya no tiene texto visible que lo describa. */
 .whatsapp-flotante {
     position: fixed;
     bottom: var(--espacio-md);
     right: var(--espacio-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
     background-color: var(--marron-ruta);
     color: var(--blanco);
-    padding: var(--espacio-sm) var(--espacio-md);
-    border-radius: 2rem;
+    border-radius: 50%;
+    font-size: 1.5rem;
     text-decoration: none;
-    font-weight: 600;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     z-index: 100;
 }
@@ -307,6 +379,81 @@ footer {
     margin-top: var(--espacio-md);
     color: var(--gris-asfalto);
     font-size: 0.875rem;
+}
+
+/* -----------------------------------------------------
+   7. CLASES PROPIAS COMPLEMENTARIAS (MiniReto 12)
+----------------------------------------------------- */
+/* Tres clases propias que se agregan JUNTO a las de Bootstrap (nunca
+   reemplazando ni redefiniendo .container, .card, .btn, etc.), para dar
+   identidad de marca a tres partes del sitio: la portada, los títulos
+   de sección y el pie de página. */
+
+/* 1) Portada: panel suave detrás de "¿Quiénes somos?" que distingue la
+   sección hero del resto del fondo crema, con el color de marca a baja
+   opacidad (no es ninguna utilidad de Bootstrap). */
+.portada-destacada {
+    background-color: rgba(92, 64, 51, 0.06);
+    border-radius: var(--bs-border-radius, 0.5rem);
+    padding-top: var(--espacio-lg);
+    padding-bottom: var(--espacio-lg);
+}
+
+/* 2) Títulos de sección: una barra corta de acento en Terracota Pedal
+   bajo cada h2, para reforzar la identidad visual más allá del color de
+   texto. Se centra automáticamente en los títulos que ya usan
+   text-center (utilidad de Bootstrap, no se modifica). */
+.seccion-titulo {
+    position: relative;
+    display: inline-block;
+}
+
+.seccion-titulo::after {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 3px;
+    margin-top: var(--espacio-sm);
+    background-color: var(--terracota-pedal);
+}
+
+.text-center.seccion-titulo {
+    display: block;
+}
+
+.text-center.seccion-titulo::after {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 3) Pie de página: fondo Negro Noche con texto crema, para cerrar el
+   sitio con el color más oscuro de la marca (en vez del mismo fondo
+   crema del body). */
+.pie-marca {
+    background-color: var(--negro-noche);
+    color: var(--crema);
+}
+
+.pie-marca a {
+    color: var(--crema);
+}
+
+.pie-marca .pie-bloque p {
+    color: rgba(243, 234, 216, 0.75);
+}
+
+/* CONFLICTO (resuelto sin !important): .pie-copy heredaba
+   color: var(--gris-asfalto) de la regla general (pensada para el pie
+   sobre fondo crema). Sobre el nuevo fondo Negro Noche de .pie-marca,
+   ese gris-asfalto da un contraste de ~2.95:1 (no cumple 4.5:1). Se
+   sobrescribe aquí, igual que con .pie-bloque p, con crema al 75% de
+   opacidad (~8.9:1 sobre Negro Noche). */
+.pie-marca .pie-copy {
+    color: rgba(243, 234, 216, 0.75);
+}
+
+.pie-marca hr {
+    border-color: rgba(243, 234, 216, 0.2);
 }
 
 /* -----------------------------------------------------
