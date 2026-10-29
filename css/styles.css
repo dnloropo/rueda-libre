@@ -6,12 +6,12 @@
    1. VARIABLES
 ----------------------------------------------------- */
 :root {
-    /* Colores de marca */
-    --verde-ruta: #1E7A4F;
-    --naranja-pedal: #F39A2B;
-    --azul-noche: #14213D;
-    --crema: #FAF6EF;
-    --gris-asfalto: #5B6470;
+    /* Colores de marca (paleta negro / beige / tonos tierra) */
+    --marron-ruta: #5C4033;
+    --terracota-pedal: #B5651D;
+    --negro-noche: #1B1512;
+    --crema: #F3EAD8;
+    --gris-asfalto: #6E5F52;
     --blanco: #FFFFFF;
 
     /* Tipografías (con fuente de respaldo) */
@@ -32,14 +32,14 @@
    "success" (#198754) en --bs-success dentro de su :root, usado por
    btn-success, text-success, bg-success y text-bg-success. La flota y
    los beneficios migrados (MiniRetos 5 y 6) usan esas utilidades, pero
-   el verde de marca es --verde-ruta (#1E7A4F), distinto. Como esta hoja
+   el color de marca es --marron-ruta (#5C4033), distinto. Como esta hoja
    se carga DESPUÉS de bootstrap.min.css, redeclarar --bs-success aquí
    (mismo :root) gana en la cascada sin tocar un solo selector de
    componente ni usar !important: todas las utilidades "success" quedan
-   automáticamente en el verde de marca. */
+   automáticamente en el color de marca. */
 :root {
-    --bs-success: var(--verde-ruta);
-    --bs-success-rgb: 30, 122, 79;
+    --bs-success: var(--marron-ruta);
+    --bs-success-rgb: 92, 64, 51;
 }
 
 /* -----------------------------------------------------
@@ -48,7 +48,7 @@
 body {
     font-family: var(--fuente-texto);
     font-weight: 400;
-    color: var(--azul-noche);
+    color: var(--negro-noche);
     background-color: var(--crema);
     line-height: 1.6;
     margin: 0;
@@ -78,7 +78,7 @@ h2 {
    de los párrafos (no lo tenía la v1.5). Se agrega text-decoration:none
    a la misma regla, sin !important. */
 a {
-    color: var(--verde-ruta);
+    color: var(--marron-ruta);
     text-decoration: none;
 }
 
@@ -136,7 +136,7 @@ header {
 }
 
 .activo {
-    color: var(--verde-ruta);
+    color: var(--marron-ruta);
     font-weight: 600;
 }
 
@@ -147,13 +147,13 @@ header {
    soluciona subiendo la especificidad de .activo a (1,1,1), combinándola
    con el mismo contexto, sin usar !important: */
 #menu a.activo {
-    color: var(--verde-ruta);
-    border-bottom: 2px solid var(--verde-ruta);
+    color: var(--marron-ruta);
+    border-bottom: 2px solid var(--marron-ruta);
 }
 
 #menu a:hover,
 #menu a:focus {
-    color: var(--verde-ruta);
+    color: var(--marron-ruta);
     text-decoration: underline;
 }
 
@@ -162,14 +162,14 @@ button:focus,
 input:focus,
 select:focus,
 textarea:focus {
-    outline: 3px solid var(--azul-noche);
+    outline: 3px solid var(--negro-noche);
     outline-offset: 2px;
 }
 
 /* Botones de llamada a la acción ("Reservar ahora") */
 .cta {
     display: inline-block;
-    background-color: var(--verde-ruta);
+    background-color: var(--marron-ruta);
     color: var(--blanco);
     padding: var(--espacio-sm) var(--espacio-md);
     border-radius: 0.25rem;
@@ -179,7 +179,7 @@ textarea:focus {
 
 .cta:hover,
 .cta:focus {
-    background-color: var(--azul-noche);
+    background-color: var(--negro-noche);
     color: var(--blanco);
 }
 
@@ -254,7 +254,7 @@ td {
 }
 
 thead th {
-    background-color: var(--azul-noche);
+    background-color: var(--negro-noche);
     color: var(--blanco);
 }
 
@@ -299,7 +299,7 @@ textarea {
 }
 
 button[type="submit"] {
-    background-color: var(--verde-ruta);
+    background-color: var(--marron-ruta);
     color: var(--blanco);
     border: none;
     padding: var(--espacio-md) var(--espacio-lg);
@@ -310,7 +310,7 @@ button[type="submit"] {
 
 button[type="submit"]:hover,
 button[type="submit"]:focus {
-    background-color: var(--azul-noche);
+    background-color: var(--negro-noche);
 }
 
 /* -----------------------------------------------------
@@ -326,7 +326,7 @@ button[type="submit"]:focus {
     position: absolute;
     top: var(--espacio-sm);
     right: var(--espacio-sm);
-    background-color: var(--verde-ruta);
+    background-color: var(--marron-ruta);
     color: var(--blanco);
     font-family: var(--fuente-texto);
     font-weight: 600;
@@ -343,7 +343,7 @@ button[type="submit"]:focus {
     position: fixed;
     bottom: var(--espacio-md);
     right: var(--espacio-md);
-    background-color: var(--verde-ruta);
+    background-color: var(--marron-ruta);
     color: var(--blanco);
     padding: var(--espacio-sm) var(--espacio-md);
     border-radius: 2rem;
@@ -355,7 +355,7 @@ button[type="submit"]:focus {
 
 .whatsapp-flotante:hover,
 .whatsapp-flotante:focus {
-    background-color: var(--azul-noche);
+    background-color: var(--negro-noche);
 }
 
 /* Espacio extra para que el botón flotante no tape el contenido final */
