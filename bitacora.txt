@@ -728,3 +728,200 @@ publicar. Commit y push.
 ENLACE PÚBLICO DE LA VERSIÓN v2.0-beta (GITHUB PAGES)
 --------------------------------------------------
 https://dnloropo.github.io/rueda-libre/
+
+==================================================
+BITÁCORA DE PRUEBAS Y DECISIONES - RUEDA LIBRE v2.0 (DÍA 3 SEM. 2: COMPONENTES Y MARCA)
+==================================================
+
+1. NAVBAR Y BOTONES UNIFICADOS CON BOOTSTRAP (MINIRETO 9)
+--------------------------------------------------
+Se reemplazó el <header>/<nav>/#menu propio (Flexbox del MiniReto 1,
+ya sin uso real desde que .container maneja el ancho) por el
+componente navbar de Bootstrap en las tres páginas: navbar
+navbar-expand-lg bg-body-tertiary, con navbar-brand (logo + nombre),
+navbar-toggler colapsable por debajo de lg y navbar-nav con nav-link
+activo marcado con la clase active + aria-current="page" en la página
+correspondiente, en vez del antiguo .activo. Como navbar-brand no es
+un encabezado, se agregó un <h1 class="visually-hidden">Rueda
+Libre</h1> dentro del contenido de cada página para no perder el
+único <h1> real que pide la semántica.
+
+Todos los botones de llamada a la acción ("Reservar ahora", los 7
+"Reservar" de la flota, "Ver tarifas", "Ver recorridos", la franja
+final y "Enviar reserva") se unificaron en btn btn-primary (o
+btn-light para la franja oscura), reemplazando la mezcla de .cta,
+enlaces sueltos dentro de párrafos y los "Reservar" en verde
+(btn-success) que venían de la paleta anterior — ya no tenía sentido
+mantener ese color ahora que la paleta de marca es negro/beige/tonos
+tierra.
+
+Limpieza de css/styles.css: se eliminaron las reglas .logo, header,
+#menu, #menu a y .activo (sección "3. NAVEGACIÓN"), resueltas por
+completo por el navbar de Bootstrap; se conservó solo el estilo de
+foco visible (focus-visible), que Bootstrap no cubre igual para
+accesibilidad de teclado en todos los navegadores.
+
+2. CARRUSEL DE PROMOCIONES EN LA PÁGINA DE INICIO (MINIRETO 10)
+--------------------------------------------------
+Se agregó un carousel de Bootstrap (id="carruselPromos") en
+index.html, con 3 carousel-item (bici urbana clásica, bici eléctrica
+urbana, ruta Reto Las Palmas), carousel-indicators, flechas
+carousel-control-prev/next y data-bs-ride="carousel" para que arranque
+automáticamente. Se agregó una sola regla propia en
+css/styles.css (sección "4. MODELO DE CAJA Y LAYOUT"):
+.carousel-item img { height: 20rem; object-fit: cover; } — sin esto,
+las tres imágenes (de proporciones distintas) hacían que el carrusel
+cambiara de alto en cada diapositiva; con height fija y object-fit:
+cover, las tres se recortan de forma consistente sin deformarse.
+
+3. FORMULARIO DE RESERVAS CON VALIDACIÓN, ALERTA Y MODAL (MINIRETO 11)
+--------------------------------------------------
+El formulario de reservas.html se reconstruyó por completo con los
+componentes de formulario de Bootstrap: cada campo quedó envuelto en
+.mb-3 con .form-label, .form-control (texto, correo, número de
+documento, celular) o .form-select (recorrido guiado), y un
+.invalid-feedback con el mensaje de error específico de cada campo. El
+grupo de radios "Tipo de bicicleta" pasó a .form-check/.form-check-input/
+.form-check-label. El <form> ganó las clases needs-validation y el
+atributo novalidate, y al final del body se agregó el script oficial
+de validación de Bootstrap (el mismo que trae su documentación,
+copiado literal) que añade was-validated al enviarse, activando los
+estilos :valid/:invalid de Bootstrap sin reemplazar ninguno de los
+atributos de validación nativa (required, pattern, minlength, type,
+min, max, maxlength, title) que ya traía el formulario desde el
+MiniReto 6 — ninguno se tocó.
+
+Se agregó una alerta informativa (alert alert-info alert-dismissible
+fade show) sobre el documento de identidad, con su botón de cierre
+(btn-close + data-bs-dismiss="alert"). Las políticas de alquiler, que
+antes vivían en un <details>/<summary> nativo, pasaron a un modal
+(data-bs-toggle="modal" + data-bs-target="#modalPoliticas") con las 5
+políticas en una lista ordenada.
+
+CONFLICTO DE ESPECIFICIDAD ENCONTRADO Y RESUELTO: al revisar el
+formulario ya con las clases de Bootstrap, tres reglas propias de
+css/styles.css seguían compitiendo con los componentes nuevos:
+- label { display: block; ... } (selector de elemento, especificidad
+  0-0-1) también alcanzaba a .form-check-label, obligándolo a quedar
+  en bloque y rompiendo el layout en línea que Bootstrap espera para
+  los radios (label al lado del círculo, no encima).
+- input[type=...] (0-0-1-1, un atributo más una etiqueta) le ganaba a
+  .form-control (0-0-1-0) en los inputs de texto, pero select y
+  textarea (0-0-0-1, sin atributo) perdían contra .form-select y
+  .form-control (0-0-1-0) — el resultado era un formulario con bordes
+  y relleno inconsistentes entre tipos de campo, cada uno mezclando
+  reglas de dos sistemas distintos.
+- button[type=submit] (0-0-1-1) competía de la misma forma con
+  .btn/.btn-primary.
+Se resolvió eliminando las tres reglas heredadas de la semana 1 y
+dejando que los componentes de formulario y botón de Bootstrap
+controlen el 100% del estilo (documentado con un comentario
+NOTA/CONFLICTO en el propio css/styles.css, siguiendo el mismo patrón
+usado en los conflictos de los MiniRetos 7 y 8). No fue necesario
+ningún !important: bastó con no competir.
+
+4. IDENTIDAD DE MARCA SOBRE BOOTSTRAP (MINIRETO 12)
+--------------------------------------------------
+Se sobrescribieron las variables CSS propias de Bootstrap (sección "1c.
+IDENTIDAD DE MARCA SOBRE BOOTSTRAP" de css/styles.css) en vez de pelear
+contra la cascada con selectores más específicos:
+--bs-primary y --bs-primary-rgb (Marrón Ruta), --bs-body-font-family
+(la tipografía de texto del proyecto), --bs-link-color/-rgb y
+--bs-link-hover-color/-rgb (Marrón Ruta / Negro Noche) y
+--bs-border-radius (0.5rem, menos redondeado que el valor por defecto
+de Bootstrap, acorde al resto del sitio).
+
+Se creó una variante propia de botón, .btn-terracota, usando las
+variables --bs-btn-* por componente (sin !important): fondo Terracota
+Pedal con texto negro en reposo (~4.8:1 de contraste, cumple WCAG AA
+para texto normal) y fondo Negro Noche con texto blanco en
+hover/active (~18:1). Se probó primero texto blanco sobre Terracota
+Pedal en reposo y se descartó: solo da ~4.3:1, por debajo del mínimo
+4.5:1 para texto de tamaño normal.
+
+Se agregaron 3 clases propias complementarias (sección "7. CLASES
+PROPIAS COMPLEMENTARIAS"): .portada-destacada (panel sutil con el
+color de marca al 6% de opacidad sobre la sección de "¿Quiénes
+somos?"), .seccion-titulo (línea Terracota Pedal de 3px bajo cada
+título de sección, con una variante centrada para los títulos que usan
+text-center) y .pie-marca (fondo Negro Noche con texto Crema en el
+<footer>, reemplazando el pie claro que tenía desde la semana 1).
+
+Se agregó Bootstrap Icons 1.11.3 por CDN en las tres páginas,
+cargado entre bootstrap.min.css y styles.css. Se usó en: los
+tres enlaces del navbar (bi-house-door, bi-tags, bi-calendar-check),
+los 4 íconos de "¿Por qué Rueda Libre?" (antes emoji 🔧🪖🧭📍, ahora
+bi-tools/bi-shield-check/bi-compass/bi-geo-alt), "Encuéntranos"
+(bi-geo-alt-fill, bi-envelope-fill) y el pie de página
+(bi-envelope-fill, bi-clock-fill). Todos los íconos decorativos (que
+acompañan texto visible) llevan aria-hidden="true"; el botón flotante
+de WhatsApp, que ahora es un ícono sin texto (bi-whatsapp dentro de un
+botón circular), lleva aria-label="Escríbenos por WhatsApp" en su
+lugar.
+
+BUG DE CONTRASTE ENCONTRADO Y CORREGIDO: al oscurecer el fondo del
+<footer> con .pie-marca, la regla heredada .pie-copy { color:
+var(--gris-asfalto); } (pensada para fondo claro) quedó dando solo
+~2.95:1 de contraste sobre el nuevo fondo oscuro — no cumple ni el
+mínimo de 4.5:1 para texto normal. Se corrigió agregando
+.pie-marca .pie-copy { color: rgba(243, 234, 216, 0.75); }, que sube
+el contraste a ~8.9:1, igual al tratamiento que ya tenían los párrafos
+de .pie-bloque.
+
+Revisión final de errores comunes: sin ningún !important fuera de
+comentarios explicativos; sin clases heredadas de Bootstrap 4
+(ml-/mr-/pl-/pr-); orden de carga correcto en las tres páginas
+(bootstrap.min.css → bootstrap-icons → styles.css); un solo bundle.min.js
+por página; estructura container > row > col verificada en
+index.html, tarifas.html y reservas.html.
+
+COMPARACIÓN ANTES / DESPUÉS
+--------------------------------------------------
+img/capturas/antes-personalizacion.jpg — sitio recién migrado a
+Bootstrap (MiniRetos 9-11), con los colores y botones por defecto de
+Bootstrap (azul primario de fábrica), antes de aplicar las variables
+de marca.
+
+img/capturas/despues-personalizacion.jpg — mismo sitio tras el
+MiniReto 12: botones y enlaces en Marrón Ruta/Terracota Pedal, línea
+Terracota bajo cada título de sección, íconos de Bootstrap Icons en
+navegación y pie, botón de WhatsApp circular, pie de página en Negro
+Noche con texto Crema. La identidad de marca (colores, tipografía)
+ya existía desde la semana 1 en css/styles.css; lo que cambia aquí es
+que ahora se expresa a través de las variables y componentes de
+Bootstrap en vez de reglas propias que compitan con ellos.
+
+RESUMEN DE LA SEMANA
+--------------------------------------------------
+La semana 2 tomó el sitio estático de la semana 1 (v1.0) y lo llevó
+por dos caminos complementarios: primero CSS propio responsive
+(Flexbox, Grid, mobile-first con media queries — v1.5), después una
+migración completa a Bootstrap 5.3.3 (grilla, utilidades, componentes
+— v2.0-beta) y finalmente la aplicación de la identidad de marca sobre
+ese framework (navbar, carrusel, formulario validado, alerta, modal e
+iconografía — v2.0). En cada paso se documentó qué CSS propio se pudo
+eliminar por quedar redundante con Bootstrap, y qué conflictos de
+especificidad aparecieron al mezclar ambos sistemas — ninguno se
+resolvió con !important; todos se resolvieron entendiendo el orden de
+carga, la cascada o las variables --bs-* de cada componente.
+
+MAPA DE CONSTRUCCIÓN DEL PRODUCTO FINAL
+--------------------------------------------------
+Los MiniRetos 1 a 4 construyeron la estructura y el contenido de las
+tres páginas. Los MiniRetos 5 a 8 les dieron semántica, un formulario
+validado y accesible, y migraron el layout completo a la grilla y las
+utilidades de Bootstrap (v2.0-beta). Los MiniRetos 9 a 12 completaron
+la migración de componentes (navbar, carrusel, formulario, alerta,
+modal) y aplicaron la identidad visual de marca sobre las variables de
+Bootstrap, sin crear archivos aislados: cada reto siguió modificando
+los mismos tres archivos HTML y el mismo css/styles.css. El resultado
+es Rueda Libre v2.0: un sitio de una sola hoja de estilos propia,
+cargada después de Bootstrap para que su identidad de marca gane la
+cascada sin !important, con todos los componentes interactivos
+(navbar colapsable, carrusel, validación de formulario, alerta
+descartable, modal) funcionando con el JavaScript propio de Bootstrap,
+sin una sola línea de JavaScript escrita a mano.
+
+ENLACE PÚBLICO DE LA VERSIÓN v2.0 (GITHUB PAGES)
+--------------------------------------------------
+https://dnloropo.github.io/rueda-libre/
