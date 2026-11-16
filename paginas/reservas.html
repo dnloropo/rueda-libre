@@ -8,151 +8,143 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Bootstrap 5.3 por CDN (MiniReto 8). Nuestra hoja propia se carga
-         DESPUÉS, para que sus reglas ganen en la cascada sin !important. -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons por CDN (MiniReto 12) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tailwind.css">
 </head>
 <body>
 
-    <!-- Encabezado con Navegación Principal (MiniReto 9: navbar colapsable
-         de Bootstrap, reemplaza el <header>/<nav>/#menu de la semana 1) -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Navegación principal">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
-                <img src="../img/logo.jpeg" alt="" width="36" height="36" class="rounded-circle">
+    <!-- Encabezado con Navegación Principal -->
+    <nav class="border-b border-gris-asfalto/20 bg-crema" aria-label="Navegación principal">
+        <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-y-3 px-4 py-3">
+            <a class="flex items-center gap-2 font-titulos text-lg font-bold" href="../index.html">
+                <img src="../img/logo.jpeg" alt="" width="36" height="36" class="rounded-full">
                 Rueda Libre
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarRL" aria-controls="navbarRL" aria-expanded="false" aria-label="Abrir menú de navegación">
-                <span class="navbar-toggler-icon"></span>
+            <button type="button" data-nav-toggle class="rounded-md border border-gris-asfalto p-2 lg:hidden" aria-controls="navbarRL" aria-expanded="false" aria-label="Abrir menú de navegación">
+                <i class="bi bi-list text-2xl" aria-hidden="true"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarRL">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html"><i class="bi bi-house-door me-1" aria-hidden="true"></i>Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="tarifas.html"><i class="bi bi-tags me-1" aria-hidden="true"></i>Tarifas y rutas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="reservas.html"><i class="bi bi-calendar-check me-1" aria-hidden="true"></i>Reservas</a>
-                    </li>
-                </ul>
-            </div>
+            <ul id="navbarRL" class="hidden w-full flex-col gap-1 lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-2">
+                <li>
+                    <a class="nav-link" href="../index.html"><i class="bi bi-house-door me-1" aria-hidden="true"></i>Inicio</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="tarifas.html"><i class="bi bi-tags me-1" aria-hidden="true"></i>Tarifas y rutas</a>
+                </li>
+                <li>
+                    <a class="nav-link nav-link-active" aria-current="page" href="reservas.html"><i class="bi bi-calendar-check me-1" aria-hidden="true"></i>Reservas</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Contenido Principal (MiniReto 8: distribución migrada a la grilla
-         de Bootstrap; formulario e información de contacto en columnas
-         8/4 desde md, y la fila de campos cortos con row/col en vez de
-         .fila-formulario. Se conservan TODOS los atributos de validación
-         nativa exactamente igual.) -->
+    <!-- Contenido Principal -->
     <main>
-        <div class="container py-5">
-        <h1>Reserva tu bicicleta</h1>
+        <div class="mx-auto max-w-6xl px-4 py-10">
+        <h1 class="mb-8 text-2xl sm:text-3xl">Reserva tu bicicleta</h1>
 
-        <div class="row g-4">
-        <div class="col-12 col-md-8">
-        <!-- Sección: Formulario de Reserva (MiniReto 11: clases de
-             formulario de Bootstrap + validación visual con el script
-             oficial de la documentación, sin perder NINGÚN atributo de
-             validación nativa (required, pattern, minlength, type, min,
-             max, maxlength, title): se conservan exactamente igual que en
-             la semana 1, solo se agregan clases y mensajes de error.) -->
+        <div class="grid gap-8 lg:grid-cols-12">
+        <div class="lg:col-span-8">
+        <!-- Sección: Formulario de Reserva. Validación visual con JS propio
+             (js/site.js), sin perder NINGÚN atributo de validación nativa
+             (required, pattern, minlength, type, min, max, maxlength,
+             title): se conservan exactamente igual que en versiones
+             anteriores, solo cambian las clases de estilo. -->
         <section>
-            <h2 class="seccion-titulo">Formulario de reserva</h2>
+            <h2 class="seccion-titulo mb-6 text-xl sm:text-2xl">Formulario de reserva</h2>
 
             <!-- Alerta informativa descartable: recuerda el documento -->
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <div data-alert class="alert-rl">
                 <strong>Recuerda:</strong> debes presentar tu documento de identidad original al recoger la bicicleta.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                <button type="button" data-alert-close class="alert-close-rl" aria-label="Cerrar">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
             </div>
 
             <form action="https://httpbin.org/post" method="post" class="needs-validation" novalidate>
 
                 <!-- Grupo 1: Tus datos -->
-                <fieldset>
-                    <legend>Tus datos</legend>
+                <fieldset class="mb-6 rounded-lg border border-gris-asfalto p-4">
+                    <legend class="px-2 font-titulos font-bold">Tus datos</legend>
 
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre completo:*</label>
-                        <input type="text" id="nombre" name="nombre_completo" class="form-control" required minlength="3">
-                        <div class="invalid-feedback">Escribe tu nombre completo (mínimo 3 caracteres).</div>
+                    <div class="mb-4">
+                        <label for="nombre" class="form-label-rl">Nombre completo:*</label>
+                        <input type="text" id="nombre" name="nombre_completo" class="form-input-rl" required minlength="3">
+                        <div class="invalid-feedback-rl">Escribe tu nombre completo (mínimo 3 caracteres).</div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="correo" class="form-label">Correo electrónico:*</label>
-                        <input type="email" id="correo" name="email" class="form-control" required>
-                        <div class="invalid-feedback">Ingresa un correo electrónico válido (ejemplo: nombre@dominio.com).</div>
+                    <div class="mb-4">
+                        <label for="correo" class="form-label-rl">Correo electrónico:*</label>
+                        <input type="email" id="correo" name="email" class="form-input-rl" required>
+                        <div class="invalid-feedback-rl">Ingresa un correo electrónico válido (ejemplo: nombre@dominio.com).</div>
                     </div>
 
-                    <div class="row g-3 mb-3">
-                        <div class="col-12 col-sm-6">
-                            <label for="documento" class="form-label">Número de documento:*</label>
-                            <input type="text" id="documento" name="numero_documento" class="form-control" required pattern="[0-9]{6,10}" title="El documento debe contener solo números, entre 6 y 10 dígitos.">
-                            <div class="invalid-feedback">El documento debe tener solo números, entre 6 y 10 dígitos.</div>
+                    <div class="mb-4 grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="documento" class="form-label-rl">Número de documento:*</label>
+                            <input type="text" id="documento" name="numero_documento" class="form-input-rl" required pattern="[0-9]{6,10}" title="El documento debe contener solo números, entre 6 y 10 dígitos.">
+                            <div class="invalid-feedback-rl">El documento debe tener solo números, entre 6 y 10 dígitos.</div>
                         </div>
 
-                        <div class="col-12 col-sm-6">
-                            <label for="celular" class="form-label">Celular / WhatsApp:*</label>
-                            <input type="tel" id="celular" name="telefono" class="form-control" required pattern="3[0-9]{9}" title="El celular debe tener exactamente 10 dígitos y comenzar por el número 3 (Ej: 3001234567).">
-                            <div class="invalid-feedback">Escribe un celular de 10 dígitos que empiece por 3 (ej: 3001234567).</div>
+                        <div>
+                            <label for="celular" class="form-label-rl">Celular / WhatsApp:*</label>
+                            <input type="tel" id="celular" name="telefono" class="form-input-rl" required pattern="3[0-9]{9}" title="El celular debe tener exactamente 10 dígitos y comenzar por el número 3 (Ej: 3001234567).">
+                            <div class="invalid-feedback-rl">Escribe un celular de 10 dígitos que empiece por 3 (ej: 3001234567).</div>
                         </div>
                     </div>
                 </fieldset>
 
                 <!-- Grupo 2: Tu alquiler -->
-                <fieldset>
-                    <legend>Tu alquiler</legend>
+                <fieldset class="mb-6 rounded-lg border border-gris-asfalto p-4">
+                    <legend class="px-2 font-titulos font-bold">Tu alquiler</legend>
 
-                    <div class="mb-3">
-                        <label for="fecha" class="form-label">Fecha del alquiler:*</label>
-                        <input type="date" id="fecha" name="fecha_alquiler" class="form-control" required min="2026-11-01" max="2026-12-31">
-                        <div class="invalid-feedback">Elige una fecha entre el 1 de noviembre y el 31 de diciembre de 2026.</div>
+                    <div class="mb-4">
+                        <label for="fecha" class="form-label-rl">Fecha del alquiler:*</label>
+                        <input type="date" id="fecha" name="fecha_alquiler" class="form-input-rl" required min="2026-11-01" max="2026-12-31">
+                        <div class="invalid-feedback-rl">Elige una fecha entre el 1 de noviembre y el 31 de diciembre de 2026.</div>
                     </div>
 
-                    <div class="mb-3">
-                        <span class="form-label d-block">Tipo de bicicleta:*</span>
+                    <div class="mb-4">
+                        <span class="form-label-rl block">Tipo de bicicleta:*</span>
 
-                        <div class="form-check">
-                            <input type="radio" id="bici_urbana" name="tipo_bicicleta" value="urbana" class="form-check-input" required>
-                            <label for="bici_urbana" class="form-check-label">Urbana</label>
-                        </div>
+                        <div class="check-group-rl">
+                            <div class="form-check-rl">
+                                <input type="radio" id="bici_urbana" name="tipo_bicicleta" value="urbana" class="form-check-input-rl" required>
+                                <label for="bici_urbana" class="form-check-label-rl">Urbana</label>
+                            </div>
 
-                        <div class="form-check">
-                            <input type="radio" id="bici_montana" name="tipo_bicicleta" value="montana" class="form-check-input">
-                            <label for="bici_montana" class="form-check-label">Montaña</label>
-                        </div>
+                            <div class="form-check-rl">
+                                <input type="radio" id="bici_montana" name="tipo_bicicleta" value="montana" class="form-check-input-rl">
+                                <label for="bici_montana" class="form-check-label-rl">Montaña</label>
+                            </div>
 
-                        <div class="form-check">
-                            <input type="radio" id="bici_electrica" name="tipo_bicicleta" value="electrica" class="form-check-input">
-                            <label for="bici_electrica" class="form-check-label">Eléctrica</label>
-                            <div class="invalid-feedback">Selecciona un tipo de bicicleta.</div>
+                            <div class="form-check-rl">
+                                <input type="radio" id="bici_electrica" name="tipo_bicicleta" value="electrica" class="form-check-input-rl">
+                                <label for="bici_electrica" class="form-check-label-rl">Eléctrica</label>
+                            </div>
+                            <div class="invalid-feedback-rl">Selecciona un tipo de bicicleta.</div>
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="plan" class="form-label">Plan de alquiler:*</label>
-                        <select id="plan" name="plan_alquiler" class="form-select" required>
+                    <div class="mb-4">
+                        <label for="plan" class="form-label-rl">Plan de alquiler:*</label>
+                        <select id="plan" name="plan_alquiler" class="form-input-rl" required>
                             <option value="">-- Selecciona un plan --</option>
                             <option value="1_hora">1 hora</option>
                             <option value="medio_dia">Medio día (4 h)</option>
                             <option value="dia_completo">Día completo</option>
                         </select>
-                        <div class="invalid-feedback">Selecciona uno de los planes de alquiler.</div>
+                        <div class="invalid-feedback-rl">Selecciona uno de los planes de alquiler.</div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="cantidad" class="form-label">Cantidad de bicicletas:*</label>
-                        <input type="number" id="cantidad" name="cantidad_bicicletas" value="1" class="form-control" required min="1" max="6">
-                        <div class="invalid-feedback">Ingresa una cantidad entre 1 y 6 bicicletas.</div>
+                    <div class="mb-4">
+                        <label for="cantidad" class="form-label-rl">Cantidad de bicicletas:*</label>
+                        <input type="number" id="cantidad" name="cantidad_bicicletas" value="1" class="form-input-rl" required min="1" max="6">
+                        <div class="invalid-feedback-rl">Ingresa una cantidad entre 1 y 6 bicicletas.</div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="recorrido" class="form-label">Recorrido guiado (opcional):</label>
-                        <select id="recorrido" name="recorrido_guiado" class="form-select">
+                    <div class="mb-4">
+                        <label for="recorrido" class="form-label-rl">Recorrido guiado (opcional):</label>
+                        <select id="recorrido" name="recorrido_guiado" class="form-input-rl">
                             <option value="ninguno">Ninguno</option>
                             <option value="rio_parques">Río y Parques (12 km)</option>
                             <option value="sabores_barrio">Sabores de Barrio (18 km)</option>
@@ -160,68 +152,68 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="comentarios" class="form-label">Comentarios o solicitudes especiales (opcional, máx. 300 caracteres):</label>
-                        <textarea id="comentarios" name="comentarios_adicionales" rows="4" cols="40" maxlength="300" class="form-control"></textarea>
+                    <div class="mb-1">
+                        <label for="comentarios" class="form-label-rl">Comentarios o solicitudes especiales (opcional, máx. 300 caracteres):</label>
+                        <textarea id="comentarios" name="comentarios_adicionales" rows="4" cols="40" maxlength="300" class="form-input-rl"></textarea>
                     </div>
                 </fieldset>
 
                 <!-- Grupo 3: Confirmación -->
-                <fieldset>
-                    <legend>Confirmación</legend>
+                <fieldset class="rounded-lg border border-gris-asfalto p-4">
+                    <legend class="px-2 font-titulos font-bold">Confirmación</legend>
 
-                    <div class="mb-2 form-check">
-                        <input type="checkbox" id="politicas" name="acepta_politicas" value="si" class="form-check-input" required>
-                        <label for="politicas" class="form-check-label">Acepto las políticas de alquiler y términos del servicio*</label>
-                        <div class="invalid-feedback">Debes aceptar las políticas de alquiler para continuar.</div>
+                    <div class="check-group-rl mb-3">
+                        <div class="form-check-rl">
+                            <input type="checkbox" id="politicas" name="acepta_politicas" value="si" class="form-check-input-rl" required>
+                            <label for="politicas" class="form-check-label-rl">Acepto las políticas de alquiler y términos del servicio*</label>
+                        </div>
+                        <div class="invalid-feedback-rl">Debes aceptar las políticas de alquiler para continuar.</div>
                     </div>
 
-                    <p>
-                        <button type="button" class="btn btn-terracota btn-sm" data-bs-toggle="modal" data-bs-target="#modalPoliticas">Ver políticas de alquiler</button>
+                    <p class="mb-3">
+                        <button type="button" data-modal-open="modalPoliticas" class="btn-terracota">Ver políticas de alquiler</button>
                     </p>
 
                     <p>
-                        <button type="submit" class="btn btn-primary">Enviar reserva</button>
+                        <button type="submit" class="btn-primary">Enviar reserva</button>
                     </p>
                 </fieldset>
 
             </form>
         </section>
 
-        <!-- Modal "Políticas de alquiler" (MiniReto 11) -->
-        <div class="modal fade" id="modalPoliticas" tabindex="-1" aria-labelledby="modalPoliticasLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title h5" id="modalPoliticasLabel">Políticas de alquiler</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <ol>
-                            <li>Presenta tu documento de identidad original al recoger la bicicleta.</li>
-                            <li>Revisa la bicicleta con el asesor antes de salir.</li>
-                            <li>Cada 15 minutos de retraso en la devolución tienen un recargo de $5.000.</li>
-                            <li>Los daños por mal uso se cobran según el costo de la reparación.</li>
-                            <li>Los menores de edad deben estar acompañados por un adulto responsable.</li>
-                        </ol>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
-                    </div>
+        <!-- Modal "Políticas de alquiler": JS propio en js/site.js -->
+        <div data-modal id="modalPoliticas" class="modal-overlay-rl hidden" aria-labelledby="modalPoliticasLabel" aria-hidden="true" role="dialog" aria-modal="true">
+            <div class="modal-panel-rl">
+                <div class="mb-4 flex items-start justify-between gap-4">
+                    <h2 class="text-lg font-bold" id="modalPoliticasLabel">Políticas de alquiler</h2>
+                    <button type="button" data-modal-close class="rounded p-1 text-negro-noche/70 hover:bg-crema hover:text-negro-noche" aria-label="Cerrar">
+                        <i class="bi bi-x-lg text-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <ol class="mb-6 list-decimal space-y-2 pl-6">
+                    <li>Presenta tu documento de identidad original al recoger la bicicleta.</li>
+                    <li>Revisa la bicicleta con el asesor antes de salir.</li>
+                    <li>Cada 15 minutos de retraso en la devolución tienen un recargo de $5.000.</li>
+                    <li>Los daños por mal uso se cobran según el costo de la reparación.</li>
+                    <li>Los menores de edad deben estar acompañados por un adulto responsable.</li>
+                </ol>
+                <div class="text-right">
+                    <button type="button" data-modal-close class="btn-primary">Entendido</button>
                 </div>
             </div>
         </div>
         </div>
 
-        <div class="col-12 col-md-4">
+        <div class="lg:col-span-4">
         <!-- Contenido Complementario (<aside>) -->
         <aside>
-            <h2 class="seccion-titulo">Horario de atención</h2>
+            <h2 class="seccion-titulo mb-6 text-xl sm:text-2xl">Horario de atención</h2>
             <dl>
-                <dt>Lunes a viernes</dt>
-                <dd>7:00 a. m. a 7:00 p. m.</dd>
+                <dt class="font-bold">Lunes a viernes</dt>
+                <dd class="mb-3">7:00 a. m. a 7:00 p. m.</dd>
 
-                <dt>Sábados, domingos y festivos</dt>
+                <dt class="font-bold">Sábados, domingos y festivos</dt>
                 <dd>6:00 a. m. a 2:00 p. m.</dd>
             </dl>
         </aside>
@@ -230,47 +222,30 @@
         </div>
     </main>
 
-    <!-- Pie de Página (MiniReto 12: fondo de marca .pie-marca + iconos) -->
-    <footer class="pie-marca">
-        <hr>
-        <div class="pie-contenido">
-            <div class="pie-bloque">
-                <strong>Rueda Libre</strong>
-                <p>Alquiler de bicicletas en Medellín</p>
+    <!-- Pie de Página -->
+    <footer class="pie-marca pb-20 pt-8">
+        <div class="mx-auto max-w-6xl px-4">
+            <hr class="mb-6">
+            <div class="flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:justify-between">
+                <div class="flex-1 basis-48">
+                    <strong>Rueda Libre</strong>
+                    <p class="mt-2">Alquiler de bicicletas en Medellín</p>
+                </div>
+                <div class="flex-1 basis-48">
+                    <strong>Contacto</strong>
+                    <p class="mt-2"><i class="bi bi-envelope-fill" aria-hidden="true"></i> <a href="mailto:hola@ruedalibre.example">hola@ruedalibre.example</a></p>
+                </div>
+                <div class="flex-1 basis-48">
+                    <strong>Horario</strong>
+                    <p class="mt-2"><i class="bi bi-clock-fill" aria-hidden="true"></i> Lun. a vie.: 7:00 a. m. a 7:00 p. m.<br>Sáb., dom. y fest.: 6:00 a. m. a 2:00 p. m.</p>
+                </div>
             </div>
-            <div class="pie-bloque">
-                <strong>Contacto</strong>
-                <p><i class="bi bi-envelope-fill" aria-hidden="true"></i> <a href="mailto:hola@ruedalibre.example">hola@ruedalibre.example</a></p>
-            </div>
-            <div class="pie-bloque">
-                <strong>Horario</strong>
-                <p><i class="bi bi-clock-fill" aria-hidden="true"></i> Lun. a vie.: 7:00 a. m. a 7:00 p. m.<br>Sáb., dom. y fest.: 6:00 a. m. a 2:00 p. m.</p>
-            </div>
+            <p class="mt-4 text-sm">© 2026 Rueda Libre</p>
         </div>
-        <p class="pie-copy">© 2026 Rueda Libre</p>
     </footer>
 
     <a href="https://wa.link/xn5b9v" target="_blank" class="whatsapp-flotante" aria-label="Escríbenos por WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script oficial de validación visual de Bootstrap (MiniReto 11),
-         copiado sin cambios desde la documentación:
-         https://getbootstrap.com/docs/5.3/forms/validation/ -->
-    <script>
-        (() => {
-            'use strict'
-            const forms = document.querySelectorAll('.needs-validation')
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-    </script>
+    <script src="../js/site.js" defer></script>
 </body>
 </html>

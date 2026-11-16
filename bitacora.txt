@@ -925,3 +925,99 @@ sin una sola línea de JavaScript escrita a mano.
 ENLACE PÚBLICO DE LA VERSIÓN v2.0 (GITHUB PAGES)
 --------------------------------------------------
 https://dnloropo.github.io/rueda-libre/
+
+
+==================================================
+BITÁCORA DE PRUEBAS Y DECISIONES - RUEDA LIBRE v3.0 (ENTREGABLE T1: TAILWIND CSS)
+==================================================
+
+1. MIGRACIÓN DE BOOTSTRAP A TAILWIND CSS
+--------------------------------------------------
+Se reemplazó Bootstrap 5.3 (framework de componentes) por Tailwind CSS
+(framework de utilidades) en las tres páginas, manteniendo exactamente
+el mismo contenido, estructura semántica y accesibilidad. Se instaló
+el CLI de Tailwind por npm (sin plugins adicionales) y se configuró
+tailwind.config.js con los colores de marca ya existentes (negro/beige/
+tonos tierra: --marron-ruta, --terracota-pedal, --negro-noche, --crema,
+--gris-asfalto) como colores propios del tema, para poder usarlos con
+utilidades normales (bg-marron-ruta, text-crema, border-terracota-pedal,
+etc.) en vez de escribir CSS aparte para cada color.
+
+css/tailwind-input.css es el archivo de entrada (@tailwind base/
+components/utilities); css/tailwind.css es el CSS ya compilado y
+minificado que cargan las tres páginas (generado con
+"npx tailwindcss -i css/tailwind-input.css -o css/tailwind.css
+--minify"). El antiguo css/styles.css (pensado para convivir con
+Bootstrap) se eliminó del repositorio: todo su contenido relevante
+(paleta, tipografías, componentes propios) se migró a la configuración
+y a los componentes de Tailwind.
+
+2. COMPONENTES PROPIOS CON @apply (NO CSS SUELTO)
+--------------------------------------------------
+Para no repetir la misma lista larga de utilidades en cada botón o
+tarjeta, se agruparon en componentes con @apply dentro de
+css/tailwind-input.css: .btn-primary, .btn-terracota, .btn-pill-light,
+.nav-link, .seccion-titulo (la barra de acento terracota bajo cada
+título, igual que en la versión Bootstrap), .card-rl, .etiqueta-nueva,
+.whatsapp-flotante, .pie-marca, .form-input-rl, .form-check-input-rl y
+.alert-rl/.modal-overlay-rl/.modal-panel-rl. Cada uno sigue siendo
+"utilidades de Tailwind" (@apply solo compone clases de utilidad ya
+existentes); lo único que cambia es que no hay que escribirlas una por
+una en cada elemento repetido del HTML. Ningún estilo se escribió como
+atributo style="" en el HTML.
+
+3. JAVASCRIPT PROPIO PARA LOS COMPONENTES INTERACTIVOS
+--------------------------------------------------
+Tailwind, a diferencia de Bootstrap, no incluye JavaScript: el
+navbar.bundle.min.js que resolvía el navbar colapsable, el carrusel,
+la alerta descartable y el modal dejó de estar disponible al quitar
+Bootstrap. Se escribió js/site.js (sin ninguna librería) para
+reemplazar cada pieza:
+- Navbar: alterna la clase "hidden" del <ul> de navegación al hacer
+  clic en el botón hamburguesa (bi-list), con aria-expanded
+  actualizado.
+- Carrusel: alterna "hidden" entre los 3 data-slide, con flechas,
+  indicadores y avance automático cada 5 segundos (clearInterval al
+  interactuar manualmente, igual que data-bs-ride="carousel").
+- Alerta: el botón data-alert-close elimina del DOM el contenedor
+  data-alert.
+- Modal: data-modal-open quita "hidden" del modal referenciado;
+  data-modal-close, clic en el fondo oscuro o la tecla Escape lo
+  vuelven a ocultar.
+- Validación: mismo patrón que el script oficial de Bootstrap
+  (MiniReto 11): al intentar enviar el formulario, si no es válido se
+  detiene el envío y se agrega la clase "was-validated" al <form>, sin
+  tocar ningún atributo de validación nativa (required, pattern,
+  minlength, type, min, max, maxlength, title).
+
+4. ESTILOS :valid/:invalid SIN LA CLASE is-invalid DE BOOTSTRAP
+--------------------------------------------------
+Bootstrap aplica sus estilos de error agregando clases is-valid/
+is-invalid por JavaScript. Tailwind no tiene ese mecanismo, así que se
+replicó el mismo comportamiento con selectores CSS nativos dentro de
+css/tailwind-input.css: "form.was-validated .form-input-rl:invalid"
+(borde rojo) y "...:valid" (borde verde), escritos con @apply sobre
+utilidades de color de Tailwind. El reto fue el grupo de radios y el
+checkbox de políticas: su mensaje de error no es hermano directo del
+<input> (está fuera de los .form-check-rl), así que ese caso se
+resolvió con el selector :has() — ".check-group-rl:has(.form-check-
+input-rl:invalid) .invalid-feedback-rl" — soportado en navegadores
+modernos (Chrome/Edge/Safari 2023+). Antes de intentar enviar el
+formulario no se muestra ningún color de error, igual que con
+Bootstrap.
+
+5. VERIFICACIÓN
+--------------------------------------------------
+Se probaron las tres páginas en escritorio (1280px) y móvil (375px)
+con capturas automatizadas (Playwright), confirmando: navbar colapsable
+funcional en móvil, carrusel con flechas e indicadores, tarjetas de
+flota/rutas/servicios con grilla responsive (1 columna en móvil, hasta
+4 en escritorio), formulario con validación visual roja/verde al
+enviarlo vacío (incluido el grupo de radios y el checkbox de
+políticas), y el modal de políticas abriéndose/cerrándose
+correctamente. Sin Bootstrap cargado en ninguna página (verificado con
+grep sobre todo el HTML).
+
+ENLACE PÚBLICO DE LA VERSIÓN v3.0 (GITHUB PAGES)
+--------------------------------------------------
+https://dnloropo.github.io/rueda-libre/

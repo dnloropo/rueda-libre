@@ -8,84 +8,74 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Bootstrap 5.3 por CDN (MiniReto 8). Nuestra hoja propia se carga
-         DESPUÉS, para que sus reglas ganen en la cascada sin !important. -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons por CDN (MiniReto 12) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tailwind.css">
 </head>
 <body>
 
-    <!-- Encabezado con Navegación Principal (MiniReto 9: navbar colapsable
-         de Bootstrap, reemplaza el <header>/<nav>/#menu de la semana 1) -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Navegación principal">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
-                <img src="../img/logo.jpeg" alt="" width="36" height="36" class="rounded-circle">
+    <!-- Encabezado con Navegación Principal -->
+    <nav class="border-b border-gris-asfalto/20 bg-crema" aria-label="Navegación principal">
+        <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-y-3 px-4 py-3">
+            <a class="flex items-center gap-2 font-titulos text-lg font-bold" href="../index.html">
+                <img src="../img/logo.jpeg" alt="" width="36" height="36" class="rounded-full">
                 Rueda Libre
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarRL" aria-controls="navbarRL" aria-expanded="false" aria-label="Abrir menú de navegación">
-                <span class="navbar-toggler-icon"></span>
+            <button type="button" data-nav-toggle class="rounded-md border border-gris-asfalto p-2 lg:hidden" aria-controls="navbarRL" aria-expanded="false" aria-label="Abrir menú de navegación">
+                <i class="bi bi-list text-2xl" aria-hidden="true"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarRL">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html"><i class="bi bi-house-door me-1" aria-hidden="true"></i>Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="tarifas.html"><i class="bi bi-tags me-1" aria-hidden="true"></i>Tarifas y rutas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="reservas.html"><i class="bi bi-calendar-check me-1" aria-hidden="true"></i>Reservas</a>
-                    </li>
-                </ul>
-            </div>
+            <ul id="navbarRL" class="hidden w-full flex-col gap-1 lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-2">
+                <li>
+                    <a class="nav-link" href="../index.html"><i class="bi bi-house-door me-1" aria-hidden="true"></i>Inicio</a>
+                </li>
+                <li>
+                    <a class="nav-link nav-link-active" aria-current="page" href="tarifas.html"><i class="bi bi-tags me-1" aria-hidden="true"></i>Tarifas y rutas</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="reservas.html"><i class="bi bi-calendar-check me-1" aria-hidden="true"></i>Reservas</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Contenido Principal (MiniReto 8: distribución migrada a la grilla
-         de Bootstrap; tablas e información complementaria en dos columnas
-         desde lg. Se conservan los estilos propios de tabla, sin la clase
-         .table de Bootstrap, tal como pide el reto.) -->
+    <!-- Contenido Principal -->
     <main>
-        <div class="container py-5">
-        <h1>Tarifas y Recorridos</h1>
+        <div class="mx-auto max-w-6xl px-4 py-10">
+        <h1 class="mb-8 text-2xl sm:text-3xl">Tarifas y Recorridos</h1>
 
-        <div class="row g-4">
-        <div class="col-12 col-lg-8">
+        <div class="grid gap-8 lg:grid-cols-12">
+        <div class="lg:col-span-8">
 
         <!-- Sección: Tabla de Alquiler -->
         <section>
-            <h2 class="seccion-titulo">Tarifas de alquiler de bicicletas</h2>
-            <table>
-                <caption>Precios de alquiler por tipo de bicicleta y tiempo</caption>
+            <h2 class="seccion-titulo mb-6 text-xl sm:text-2xl">Tarifas de alquiler de bicicletas</h2>
+            <table class="mb-8 w-full border-collapse">
+                <caption class="mb-2 text-left font-titulos font-bold">Precios de alquiler por tipo de bicicleta y tiempo</caption>
                 <thead>
                     <tr>
-                        <th scope="col">Tipo de bicicleta</th>
-                        <th scope="col">1 hora</th>
-                        <th scope="col">Medio día (4 h)</th>
-                        <th scope="col">Día completo</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">Tipo de bicicleta</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">1 hora</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">Medio día (4 h)</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">Día completo</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">Urbana</th>
-                        <td>$10.000</td>
-                        <td>$30.000</td>
-                        <td>$50.000</td>
+                        <th scope="row" class="border border-gris-asfalto p-2 text-left sm:p-3">Urbana</th>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$10.000</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$30.000</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$50.000</td>
                     </tr>
                     <tr>
-                        <th scope="row">Montaña</th>
-                        <td>$15.000</td>
-                        <td>$45.000</td>
-                        <td>$70.000</td>
+                        <th scope="row" class="border border-gris-asfalto p-2 text-left sm:p-3">Montaña</th>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$15.000</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$45.000</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$70.000</td>
                     </tr>
                     <tr>
-                        <th scope="row">Eléctrica</th>
-                        <td>$25.000</td>
-                        <td>$70.000</td>
-                        <td>$110.000</td>
+                        <th scope="row" class="border border-gris-asfalto p-2 text-left sm:p-3">Eléctrica</th>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$25.000</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$70.000</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$110.000</td>
                     </tr>
                 </tbody>
             </table>
@@ -93,56 +83,56 @@
 
         <!-- Sección: Tabla de Recorridos -->
         <section id="recorridos">
-            <h2 class="seccion-titulo">Recorridos guiados</h2>
-            <table>
-                <caption>Programación y costo de recorridos guiados en Medellín</caption>
+            <h2 class="seccion-titulo mb-6 text-xl sm:text-2xl">Recorridos guiados</h2>
+            <table class="mb-6 w-full border-collapse">
+                <caption class="mb-2 text-left font-titulos font-bold">Programación y costo de recorridos guiados en Medellín</caption>
                 <thead>
                     <tr>
-                        <th scope="col">Recorrido</th>
-                        <th scope="col">Distancia</th>
-                        <th scope="col">Duración</th>
-                        <th scope="col">Nivel</th>
-                        <th scope="col">Precio por persona</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">Recorrido</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">Distancia</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">Duración</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">Nivel</th>
+                        <th scope="col" class="border border-gris-asfalto bg-negro-noche p-2 text-left text-white sm:p-3">Precio por persona</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">Río y Parques</th>
-                        <td>12 km</td>
-                        <td>2 h</td>
-                        <td>Fácil</td>
-                        <td>$45.000</td>
+                        <th scope="row" class="border border-gris-asfalto p-2 text-left sm:p-3">Río y Parques</th>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">12 km</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">2 h</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">Fácil</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$45.000</td>
                     </tr>
                     <tr>
-                        <th scope="row">Sabores de Barrio</th>
-                        <td>18 km</td>
-                        <td>3 h</td>
-                        <td>Medio</td>
-                        <td>$60.000</td>
+                        <th scope="row" class="border border-gris-asfalto p-2 text-left sm:p-3">Sabores de Barrio</th>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">18 km</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">3 h</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">Medio</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$60.000</td>
                     </tr>
                     <tr>
-                        <th scope="row">Reto Las Palmas</th>
-                        <td>25 km</td>
-                        <td>4 h</td>
-                        <td>Difícil</td>
-                        <td>$85.000</td>
+                        <th scope="row" class="border border-gris-asfalto p-2 text-left sm:p-3">Reto Las Palmas</th>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">25 km</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">4 h</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">Difícil</td>
+                        <td class="border border-gris-asfalto p-2 sm:p-3">$85.000</td>
                     </tr>
                 </tbody>
             </table>
-            <a href="reservas.html" class="btn btn-primary"><i class="bi bi-calendar-check me-1" aria-hidden="true"></i>Reservar ahora un recorrido</a>
+            <a href="reservas.html" class="btn-primary"><i class="bi bi-calendar-check me-1" aria-hidden="true"></i>Reservar ahora un recorrido</a>
         </section>
 
         </div>
-        <div class="col-12 col-lg-4">
+        <div class="lg:col-span-4">
 
         <!-- Contenido Complementario (<aside>) -->
         <aside>
-            <h2 class="seccion-titulo">Información importante</h2>
-            <p><strong>Nota:</strong> Todas las tarifas de alquiler incluyen casco y candado para tu protección.</p>
-            <p><strong>Horarios:</strong> Los recorridos guiados salen todos los sábados y domingos a las 7:00 a. m.</p>
+            <h2 class="seccion-titulo mb-6 text-xl sm:text-2xl">Información importante</h2>
+            <p class="mb-3"><strong>Nota:</strong> Todas las tarifas de alquiler incluyen casco y candado para tu protección.</p>
+            <p class="mb-3"><strong>Horarios:</strong> Los recorridos guiados salen todos los sábados y domingos a las 7:00 a. m.</p>
 
-            <h3>¿Qué llevar a tu rodada?</h3>
-            <ul>
+            <h3 class="mb-2 text-lg font-bold">¿Qué llevar a tu rodada?</h3>
+            <ul class="list-disc space-y-1 pl-6">
                 <li>Ropa cómoda y deportiva</li>
                 <li>Agua para hidratación</li>
                 <li>Protector solar</li>
@@ -155,28 +145,30 @@
         </div>
     </main>
 
-    <!-- Pie de Página (MiniReto 12: fondo de marca .pie-marca + iconos) -->
-    <footer class="pie-marca">
-        <hr>
-        <div class="pie-contenido">
-            <div class="pie-bloque">
-                <strong>Rueda Libre</strong>
-                <p>Alquiler de bicicletas en Medellín</p>
+    <!-- Pie de Página -->
+    <footer class="pie-marca pb-20 pt-8">
+        <div class="mx-auto max-w-6xl px-4">
+            <hr class="mb-6">
+            <div class="flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:justify-between">
+                <div class="flex-1 basis-48">
+                    <strong>Rueda Libre</strong>
+                    <p class="mt-2">Alquiler de bicicletas en Medellín</p>
+                </div>
+                <div class="flex-1 basis-48">
+                    <strong>Contacto</strong>
+                    <p class="mt-2"><i class="bi bi-envelope-fill" aria-hidden="true"></i> <a href="mailto:hola@ruedalibre.example">hola@ruedalibre.example</a></p>
+                </div>
+                <div class="flex-1 basis-48">
+                    <strong>Horario</strong>
+                    <p class="mt-2"><i class="bi bi-clock-fill" aria-hidden="true"></i> Lun. a vie.: 7:00 a. m. a 7:00 p. m.<br>Sáb., dom. y fest.: 6:00 a. m. a 2:00 p. m.</p>
+                </div>
             </div>
-            <div class="pie-bloque">
-                <strong>Contacto</strong>
-                <p><i class="bi bi-envelope-fill" aria-hidden="true"></i> <a href="mailto:hola@ruedalibre.example">hola@ruedalibre.example</a></p>
-            </div>
-            <div class="pie-bloque">
-                <strong>Horario</strong>
-                <p><i class="bi bi-clock-fill" aria-hidden="true"></i> Lun. a vie.: 7:00 a. m. a 7:00 p. m.<br>Sáb., dom. y fest.: 6:00 a. m. a 2:00 p. m.</p>
-            </div>
+            <p class="mt-4 text-sm">© 2026 Rueda Libre</p>
         </div>
-        <p class="pie-copy">© 2026 Rueda Libre</p>
     </footer>
 
     <a href="https://wa.link/xn5b9v" target="_blank" class="whatsapp-flotante" aria-label="Escríbenos por WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/site.js" defer></script>
 </body>
 </html>

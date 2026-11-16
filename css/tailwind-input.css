@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================
+   RUEDA LIBRE — COMPONENTES PROPIOS SOBRE TAILWIND
+   Cada clase de aquí se construye con @apply, es decir,
+   combinando utilidades de Tailwind (color, espaciado,
+   bordes, tipografía) para no repetir la misma lista larga
+   de clases en cada botón/tarjeta del HTML. Ninguna regla
+   usa valores "mágicos" fuera de la paleta de marca definida
+   en tailwind.config.js.
+   ===================================================== */
+
+@layer base {
+  body {
+    @apply bg-crema font-texto text-negro-noche;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-titulos font-bold;
+  }
+  a {
+    @apply text-marron-ruta no-underline hover:underline hover:text-negro-noche;
+  }
+}
+
+@layer components {
+  /* Botones: Reservar (marrón) y Ver tarifas/recorridos/políticas (terracota) */
+  .btn-primary {
+    @apply inline-block rounded-lg bg-marron-ruta px-4 py-2 font-semibold text-white
+           transition-colors hover:bg-negro-noche focus-visible:outline focus-visible:outline-2
+           focus-visible:outline-offset-2 focus-visible:outline-negro-noche;
+  }
+  .btn-terracota {
+    @apply inline-block rounded-lg bg-terracota-pedal px-3 py-1.5 text-sm font-semibold text-black
+           transition-colors hover:bg-negro-noche hover:text-white focus-visible:outline
+           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-negro-noche;
+  }
+  .btn-pill-light {
+    @apply inline-block rounded-full bg-white px-6 py-3 text-lg font-bold text-marron-ruta
+           transition-colors hover:bg-crema;
+  }
+
+  /* Navegación */
+  .nav-link {
+    @apply flex items-center gap-1 rounded-md px-3 py-2 font-medium text-negro-noche
+           hover:text-marron-ruta;
+  }
+  .nav-link-active {
+    @apply text-marron-ruta underline underline-offset-4;
+  }
+
+  /* Título de sección: barra de acento terracota debajo del h2 */
+  .seccion-titulo {
+    @apply relative inline-block after:mt-2 after:block after:h-[3px] after:w-12
+           after:bg-terracota-pedal;
+  }
+  .seccion-titulo-center {
+    @apply block after:mx-auto;
+  }
+
+  /* Tarjetas (flota, rutas) */
+  .card-rl {
+    @apply flex h-full flex-col overflow-hidden rounded-lg border border-gris-asfalto/30
+           bg-white shadow-sm;
+  }
+
+  /* Etiqueta "Nuevo" sobre el servicio destacado */
+  .etiqueta-nueva {
+    @apply absolute right-2 top-2 rounded bg-marron-ruta px-2 py-1 text-xs font-semibold
+           text-white;
+  }
+
+  /* Botón flotante de WhatsApp */
+  .whatsapp-flotante {
+    @apply fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full
+           bg-marron-ruta text-2xl text-white shadow-lg transition-colors
+           hover:bg-negro-noche;
+  }
+
+  /* Pie de página de marca */
+  .pie-marca {
+    @apply bg-negro-noche text-crema;
+  }
+  .pie-marca a {
+    @apply text-crema;
+  }
+  .pie-marca p {
+    @apply text-crema/75;
+  }
+  .pie-marca hr {
+    @apply border-crema/20;
+  }
+
+  /* Campos de formulario */
+  .form-label-rl {
+    @apply mb-1 block font-medium text-negro-noche;
+  }
+  .form-input-rl {
+    @apply block w-full rounded-md border border-gris-asfalto bg-white px-3 py-2 text-negro-noche
+           focus:border-marron-ruta focus:outline focus:outline-2 focus:outline-offset-2
+           focus:outline-marron-ruta;
+  }
+  .form-check-rl {
+    @apply mb-1 flex items-center gap-2;
+  }
+  .form-check-input-rl {
+    @apply h-4 w-4 border-gris-asfalto text-marron-ruta focus:outline focus:outline-2
+           focus:outline-offset-2 focus:outline-marron-ruta;
+  }
+  .form-check-label-rl {
+    @apply align-middle;
+  }
+  .invalid-feedback-rl {
+    @apply mt-1 hidden text-sm text-red-700;
+  }
+
+  /* Validación visual: mismo patrón que Bootstrap (.was-validated), pero
+     escrito con selectores CSS propios en vez de JS de un framework.
+     Antes de enviar el formulario no se muestra ningún color de error;
+     solo después de intentar enviarlo (clase .was-validated en <form>,
+     agregada por js/site.js) se resaltan los campos inválidos en rojo y
+     los válidos en verde, y aparece el mensaje de error correspondiente. */
+  form.was-validated .form-input-rl:invalid {
+    @apply border-red-600 focus:outline-red-600;
+  }
+  form.was-validated .form-input-rl:valid {
+    @apply border-green-700 focus:outline-green-700;
+  }
+  form.was-validated .form-input-rl:invalid ~ .invalid-feedback-rl,
+  form.was-validated .form-check-input-rl:invalid ~ .invalid-feedback-rl,
+  form.was-validated .check-group-rl:has(.form-check-input-rl:invalid) .invalid-feedback-rl {
+    @apply block;
+  }
+
+  /* Alerta informativa descartable */
+  .alert-rl {
+    @apply relative mb-4 rounded-lg border border-sky-300 bg-sky-50 px-4 py-3 pr-10 text-sky-900;
+  }
+  .alert-close-rl {
+    @apply absolute right-2 top-2 rounded p-1 text-sky-900/70 hover:bg-sky-100 hover:text-sky-900
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700;
+  }
+
+  /* Modal de políticas de alquiler */
+  .modal-overlay-rl {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4;
+  }
+  .modal-panel-rl {
+    @apply max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6 shadow-xl;
+  }
+}
