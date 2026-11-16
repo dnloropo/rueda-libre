@@ -231,8 +231,8 @@ etiquetas <style>.
   combinación solo es apta para texto grande (3.1:1) y la etiqueta usa una
   fuente pequeña (0.75rem).
 - Botón de WhatsApp: enlace con position: fixed, anclado a bottom/right,
-  visible en las tres páginas al hacer scroll, con texto visible ("💬
-  WhatsApp") y destino https://wa.me/573000000000 en una pestaña nueva. Para
+  visible en las tres páginas al hacer scroll, con texto visible
+  ("WhatsApp") y destino https://wa.me/573000000000 en una pestaña nueva. Para
   que no tape el contenido final, se agregó padding-bottom al <footer>
   equivalente al espacio que ocupa el botón.
 - Revisión final en DevTools: se recorrieron las tres páginas con Tab
@@ -850,7 +850,7 @@ text-center) y .pie-marca (fondo Negro Noche con texto Crema en el
 Se agregó Bootstrap Icons 1.11.3 por CDN en las tres páginas,
 cargado entre bootstrap.min.css y styles.css. Se usó en: los
 tres enlaces del navbar (bi-house-door, bi-tags, bi-calendar-check),
-los 4 íconos de "¿Por qué Rueda Libre?" (antes emoji 🔧🪖🧭📍, ahora
+los 4 íconos de "¿Por qué Rueda Libre?" (antes emoji, ahora
 bi-tools/bi-shield-check/bi-compass/bi-geo-alt), "Encuéntranos"
 (bi-geo-alt-fill, bi-envelope-fill) y el pie de página
 (bi-envelope-fill, bi-clock-fill). Todos los íconos decorativos (que
